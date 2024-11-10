@@ -18,6 +18,7 @@ void yuanxjs(double x1,double y1,double x2,double y2,int fl)
     xxxx+=detx*dx*fl;
     yyyy+=detx*dy*fl;
 }
+
 int main()
 {
     int t;
