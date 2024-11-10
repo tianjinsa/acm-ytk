@@ -21,17 +21,18 @@ int aim(double x,double y,int n)
     if(max>del){
         x=(x*n-xy[ax][0])/(n-1);
         y=(y*n-xy[ax][1])/(n-1);
-        xy[ax][2]=-1;
+        xy[ax][2]=-n;
         return aim(x,y,n-1);
     }
-    n=0;
-    for(int i=0;i<nn;i++){
-        tt=ss(x,y,xy[i][0],xy[i][1]);
-        if(tt<=1.0001){
-            n++;
+    int xx=0;
+    for(int i=0;i<n;i++){
+        for(int u=0;u<n;u++){
+            if(i!=u&&(xy[i][2]>=-n-1)&&(xy[u][2]>=-n-1)){
+
+            }
         }
     }
-    return n;
+    return xx;
 }
 int main()
 {
