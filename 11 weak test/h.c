@@ -2,69 +2,86 @@
 
 int main()
 {
-    int a,b,c,d,e,f,xx=0;//xx表示需要的6*6的包装数
-    while(scanf("%d%d%d%d%d%d",&a,&b,&c,&d,&e,&f)&&a+b+c+d+e+f!=0)//a,b,c,d,e,f分别表示1*1,2*2,3*3,4*4,5*5,6*6的货物数
+    int a,b,c,d,e,f,xx=0;
+    while(scanf("%d%d%d%d%d%d",&a,&b,&c,&d,&e,&f)&&a+b+c+d+e+f!=0)
     {
         xx=f;
-        if(e){
+        if(e>0)
+        {
             xx+=e;
-            if(a){
-                a-=11*e;
-                if(a<0){
-                    a=0;
-                }
-            }
+            a-=11*e;
         }
-        if(d){
+        if(d>0)
+        {
             xx+=d;
-            if(b){
-                b-=5*d;
-                if(b<0){
-                    a+=b*4;
-                    b=0;
+            b-=5*d;
+            if(b<0)
+            {
+                a+=4*b;
+            }
+        }
+        if(c>0)
+        {
+            xx+=c/4;
+            c=c%4;
+            if(c>0)
+            {
+                xx++;
+                if(c==1)
+                {
+                    if(b>0)
+                    {
+                        b-=5;
+                        a-=7;
+                    }
+                    else
+                    {
+                        a-=27;
+                    }
+                }
+                else if(c==2)
+                {
+                    if(b>0)
+                    {
+                        b-=3;
+                        a-=6;
+                    }
+                    else
+                    {
+                        a-=18;
+                    }
+                }
+                else if(c==3)
+                {
+                    if(b>0)
+                    {
+                        b-=1;
+                        a-=5;
+                    }
+                    else
+                    {
+                        a-=9;
+                    }
                 }
             }
         }
-        if(c){
-            xx+=c/8;
-            c%=8;
-            if(c){
+        if(b>0)
+        {
+            xx+=b/9;
+            b=b%9;
+            if(b>0)
+            {
                 xx++;
-                if(c==1||c==2||c==3){
-                    b-=19-4*--c;
-                    if(b<0){
-                        a+=b*8;
-                        b=0;
-                    }
-                }
-                if(c==4){
-                    b-=9;
-                    if(b<0){
-                        a+=b*8;
-                        b=0;
-                    }
-                }
-                if(c==5){
-                    b-=5;
-                    if(b<0){
-                        a+=b*8;
-                        b=0;
-                    }
-                }
-                if(c==6){
-                    b-=3;
-                    if(b<0){
-                        a+=b*8;
-                        b=0;
-                    }
-                }
-                if(c==7){
-                    b-=1;
-                    if(b<0){
-                        a+=b*8;
-                        b=0;
-                    }
-                }
+                a-=36-b*4;
+            }
+        }
+        if(a>0)
+        {
+            xx+=a/36;
+            a=a%36;
+            if(a>0)
+            {
+                xx++;
             }
         }
         printf("%d\n",xx);
