@@ -39,11 +39,11 @@ int aim(double x,double y,int n)
         xy[ax][2]=-n;
         return aim(x,y,n-1);
     }
-    int xx=0,maxn=0;
+    int xx=0,maxn=1;
     for(int i=0;i<nn;i++){
         for(int u=i+1;u<nn;u++){
             if(i!=u&&(xy[i][2]>=-n-2)&&(xy[u][2]>=-n-2)){
-                if(ss(xy[i][0],xy[i][1],xy[u][0],xy[u][1])<=2.0001){
+                if(ss(xy[i][0],xy[i][1],xy[u][0],xy[u][1])<=2.0002){
                     for(int g=0;g<=1;g++){
                         yuanxjs(xy[i][0],xy[i][1],xy[u][0],xy[u][1],g);
                         xx=0;
