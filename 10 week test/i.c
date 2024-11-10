@@ -4,7 +4,7 @@ double xy[301][3],tt,max,xxxx,yyyy,xxx,yyy;
 int nn,ax;
 double ss(double a,double b,double x,double y)
 {
-    return pow(pow(a-x,2)+pow(b-y,2),0.5);
+    return sqrt(pow(a-x,2)+pow(b-y,2));
 }
 void yuanxjs(double x1,double y1,double x2,double y2,int fl)
 {
@@ -40,14 +40,14 @@ int aim(double x,double y,int n)
         return aim(x,y,n-1);
     }
     int xx=0,maxn=0;
-    for(int i=0;i<n;i++){
-        for(int u=0;u<n;u++){
-            if(i!=u&&(xy[i][2]>=-n-1)&&(xy[u][2]>=-n-1)){
-                if(ss(xy[i][0],xy[i][1],xy[u][0],xy[u][1])<=1.0001){
+    for(int i=0;i<nn;i++){
+        for(int u=i+1;u<nn;u++){
+            if(i!=u&&(xy[i][2]>=-n-2)&&(xy[u][2]>=-n-2)){
+                if(ss(xy[i][0],xy[i][1],xy[u][0],xy[u][1])<=2.0001){
                     for(int g=0;g<=1;g++){
                         yuanxjs(xy[i][0],xy[i][1],xy[u][0],xy[u][1],g);
                         xx=0;
-                        for(int p=0;p<n;p++){
+                        for(int p=0;p<nn;p++){
                             if(ss(xy[p][0],xy[p][1],xxxx,yyyy)<=1.0001){
                                 xx++;
                             }
