@@ -16,24 +16,12 @@ int main()
         }
         aa=2+2*((a+1)%2);
         for(int i=0;i<b-1;i++){
-            if(a%2){
-                if(i%2){
-                    n+=a*2-1;
-                }
-                else{
-                    n+=aa;
-                    aa+=4;
-                }
-                
+            if((i%2+a%2+1)%2){
+                n+=a*2-1;
             }
             else{
-                if(i%2){
-                    n+=aa;
-                    aa+=4;
-                }
-                else{
-                    n+=a*2-1;
-                }
+                n+=aa;
+                aa+=4;
             }
         }
         printf("%d\n",n);
