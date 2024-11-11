@@ -1,30 +1,37 @@
-#include <stdio.h>
+#include<stdio.h>
+#include<string.h>
 int main()
 {
-    int a,b;
-    while(scanf("%d %d",&b,&a)!=EOF)
+    int n,xx=0;
+    char a[100];
+    fgets(a, 100, stdin);
+    n=strlen(a);
+    if(a[n-1]=='\n')
     {
-        int n=1,aa=4;
-        for(int i=0;i<a-1;i++){
-            if(i%2){
-                n+=aa;
-                aa+=4;
-            }
-            else{
-                n+=1;
-            }
+        a[n-1]='\0';
+        n--;
+    }
+    for(int i=0;i<n/2;i++)
+    {
+        if('a'<=a[i]&&a[i]<='z')
+        {
+            a[i]=a[i]-'a'+'A';
         }
-        aa=2+2*((a+1)%2);
-        for(int i=0;i<b-1;i++){
-            if((i%2+a%2+1)%2){
-                n+=a*2-1;
-            }
-            else{
-                n+=aa;
-                aa+=4;
-            }
+        if('a'<=a[n-i-1]&&a[n-i-1]<='z')
+        {
+            a[n-i-1]=a[n-i-1]-'a'+'A';
         }
-        printf("%d\n",n);
+        if(a[i]!=a[n-i-1])
+        {
+            xx=1;
+            break;
+        }
+    }
+    if(xx){
+        printf("No\n");
+    }
+    else{
+        printf("Yes\n");
     }
     return 0;
 }
