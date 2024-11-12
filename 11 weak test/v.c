@@ -16,10 +16,15 @@ int main()
                 x1=x2;
                 x2=t;
             }
+            long long  xxx=100000*x1;yyy=100000*x2;
+            if(xxx==yyy){
+            goto to;
+            }
             printf("x1=%.5lf;x2=%.5lf\n",x1,x2);
         }
         else if(b*b==4*a*c){
             x1=(-b)/(2*a);
+            to:
             printf("x1=x2=%.5lf\n",x1);
         }
         else{
