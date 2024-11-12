@@ -6,7 +6,7 @@ int main()
     scanf("%d",&n);
     while (n--){
         double a,b,c,x1,x2;
-        int tt;
+        long long tt;
         scanf("%lf%lf%lf",&a,&b,&c);
         tt=b*b-4*a*c;
         if(tt>0){
