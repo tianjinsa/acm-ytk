@@ -4,7 +4,7 @@ int main()
 {
     int n;
     scanf("%d",&n);
-    while (n--){
+    while(n--){
         double a,b,c,x1,x2;
         int tt;
         scanf("%lf%lf%lf",&a,&b,&c);
@@ -17,16 +17,16 @@ int main()
                 x1=x2;
                 x2=t;
             }
-            printf("x1=%.5lf;x2=%.5lf\n",x1,x2);
+            printf("x1=%.5f;x2=%.5f\n",x1,x2);
         }
         else if(tt==0){
             x1=(-b)/(2*a);
-            printf("x1=x2=%.5lf\n",x1);
+            printf("x1=x2=%.5f\n",x1);
         }
         else{
             x1=(-b)/(2*a);
             x2=sqrt(-tt)/(2*a);
-            printf("x1=%.5lf+%.5lfi;x2=%.5lf-%.5lfi\n",x1,x2,x1,x2);
+            printf("x1=%.5f+%.5fi;x2=%.5f-%.5fi\n",x1,x2,x1,x2);
         }
     }
     return 0;
