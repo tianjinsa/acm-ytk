@@ -4,9 +4,8 @@ int main()
 {
     int n;
     scanf("%d",&n);
-    while(n--){
-        double a,b,c,x1,x2;
-        int tt;
+    while (n--){
+        double a,b,c,x1,x2,tt;
         scanf("%lf%lf%lf",&a,&b,&c);
         tt=b*b-4*a*c;
         if(tt>0){
@@ -17,11 +16,16 @@ int main()
                 x1=x2;
                 x2=t;
             }
-            printf("x1=%.5f;x2=%.5f\n",x1,x2);
+            long long  xxx=100000*x1;yyy=100000*x2;
+            if(xxx==yyy){
+            goto to;
+            }
+            printf("x1=%.5lf;x2=%.5lf\n",x1,x2);
         }
-        else if(tt==0){
+        else if(b*b==4*a*c){
             x1=(-b)/(2*a);
-            printf("x1=x2=%.5f\n",x1);
+            to:
+            printf("x1=x2=%.5lf\n",x1);
         }
         else{
             x1=(-b)/(2*a);
