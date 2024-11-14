@@ -6,7 +6,7 @@ int main()
     scanf("%d",&n);
     while(n--){
         long long a[100]={0},x,y;
-        scanf("%d%d",&x,&y);
+        scanf("%lld%lld",&x,&y);
         a[x-1]=0;
         a[x]=1;
         for(int i=x+1;i<=y;i++){
