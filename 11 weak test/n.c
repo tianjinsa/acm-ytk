@@ -5,13 +5,14 @@ int main()
     int n;
     scanf("%d",&n);
     while(n--){
-        int a[52]={0,1},x,y;
-        scanf("%d%d",&x,&y);
-        y-=x-1;
-        for(int i=2;i<=y;i++){
+        long long a[100]={0},x,y;
+        scanf("%lld%lld",&x,&y);
+        a[x-1]=0;
+        a[x]=1;
+        for(int i=x+1;i<=y;i++){
             a[i]=a[i-1]+a[i-2];
         }
-        printf("%d\n",a[y]);
+        printf("%lld\n",a[y]);
     }
     
     return 0;
