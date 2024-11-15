@@ -1,5 +1,5 @@
 #include<stdio.h>
-long long derangement(int n)
+long long derangement(int n)//
 {
     long long dp[n+1];
     dp[2]=1;
