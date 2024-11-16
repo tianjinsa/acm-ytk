@@ -18,16 +18,16 @@ int main()
 {
     int k,m;
     scanf("%d%d%d",&n,&k,&m);
-    char s[100010];
+    char s[100100000];
     scanf("%s",s);
     int x=0;
-    for(int i=0;i<m/* -1 */;i++){
+    for(int i=0;i<m-1;i++){
         x=(x+k)%n;
         caru(s,x+1,sss(s[x]));
         x++;
-        printf("%s\n",s);
+        //printf("%s\n",s);
     }
-    /* x=(x+k)%n;
-    printf("%s\n",s); */
+    x=(x+k)%n;
+    printf("%c\n",sss(s[x]));
     return 0;
 }
