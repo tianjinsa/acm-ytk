@@ -17,17 +17,17 @@ void caru(char a[],int x,char y)
 int main()
 {
     int k,m;
-    while(scanf("%d%d%d",&n,&k,&m)!=EOF){
-        char s[1001000];
-        scanf("%s",s);
-        int x=0;
-        for(int i=0;i<m-1;i++){
-            x=(x+k)%n;
-            caru(s,x+1,sss(s[x]));
-            x++;
-        }
+    scanf("%d%d%d",&n,&k,&m);
+    char s[100010];
+    scanf("%s",s);
+    int x=0;
+    for(int i=0;i<m/* -1 */;i++){
         x=(x+k)%n;
-        printf("%d\n",sss(s[x]));
+        caru(s,x+1,sss(s[x]));
+        x++;
+        printf("%s\n",s);
     }
+    /* x=(x+k)%n;
+    printf("%s\n",s); */
     return 0;
 }
