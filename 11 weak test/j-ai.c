@@ -14,10 +14,12 @@ int main() {
     char *tokens = (char *)malloc((n + 1) * sizeof(char));
     scanf("%s", tokens);
 
-    // 计算第 m 次中奖代币的位置
-    long long pos = (k % n) * m % n;
+    long long pos = 0;
+    for (long long i = 1; i <= m; i++) {
+        pos = (pos + k) % (n + i - 1);
+    }
 
-    // 由于数组从 0 开始，需要取模 n
+    // 计算最终中奖代币的位置
     int winning_pos = pos % n;
     char winning_token = tokens[winning_pos];
     char new_token = next_char(winning_token);
