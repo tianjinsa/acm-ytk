@@ -16,18 +16,22 @@ void caru(char a[],int x,char y)
 }
 int main()
 {
-    int k,m;
-    scanf("%d%d%d",&n,&k,&m);
-    char s[100100000];
-    scanf("%s",s);
-    int x=0;
-    for(int i=0;i<m-1;i++){
+    int k=3,m;
+    for(m=3;m<=4500;m++){
+        n=6;
+        k=3;
+        //scanf("%d%d%d",&n,&k,&m);
+        char s[100000]="AAAAAA";
+        //scanf("%s",s);
+        int x=0;
+        for(int i=0;i<m-1;i++){
+            x=(x+k)%n;
+            caru(s,x+1,sss(s[x]));
+            x++;
+            //printf("%s\n",s);
+        }
         x=(x+k)%n;
-        caru(s,x+1,sss(s[x]));
-        x++;
-        //printf("%s\n",s);
+        printf("%d,%d\n1,%d\n",m,sss(s[x])-'A'+1,sss(s[x])-'A'+1);
     }
-    x=(x+k)%n;
-    printf("%c\n",sss(s[x]));
     return 0;
 }

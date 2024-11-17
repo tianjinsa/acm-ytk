@@ -22,15 +22,16 @@ void caru(char *a, int x, char y, int *n) {
 }
 int main()
 {
-    int k,m,xx,nn,n,xn;
-    while(scanf("%d%d%d",&n,&k,&m)!=EOF){
+    int k,xx,nn,n,xn;
+    long long m;
+    while(scanf("%d%d%lld",&n,&k,&m)!=EOF){
         nn=1;
         xn=n;
         int a[n+2];
         for(int i=0;i<n;i++){
             a[i]=i;
         }
-        char s[n+1],b[n+m/2];
+        char s[n+1],b[(n+m)/3];
         scanf("%s",s);
         int x=0;
         for(int i=0;i<m-1;i++){
@@ -74,7 +75,7 @@ int main()
             n++;
         }
         x--;
-        printf("%c\n",b[x-a[xx]+1]);
+        printf("%d\n",b[x-a[xx]+1]-'A'+1);
     }
     return 0;
 }
