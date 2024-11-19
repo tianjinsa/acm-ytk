@@ -20,15 +20,15 @@ int main()
             else if(strcmp(c,"up")==0){
                 for(int j=1;j<=3;j+=2){
                     for(int h=0; h<4; h++){
-                        if(abc[a[j][h]-'A'][0]==0){
-                            abc[a[j][h]-'A'][0]=j;
+                        if(abc[a[j/2][h]-'A'][0]==0){
+                            abc[a[j/2][h]-'A'][0]=j;
                         }
-                        else if(abc[a[j][h]-'A'][0]!=j){
-                            abc[a[j][h]-'A'][0]=2;
-                            abc[a[j][h]-'A'][1]=0;
+                        else if(abc[a[j/2][h]-'A'][0]!=j){
+                            abc[a[j/2][h]-'A'][0]=2;
+                            abc[a[j/2][h]-'A'][1]=0;
                         }
-                        else if(abc[a[j][h]-'A'][0]==j){
-                            abc[a[j][h]-'A'][1]=1;
+                        else if(abc[a[j/2][h]-'A'][0]==j){
+                            abc[a[j/2][h]-'A'][1]=1;
                         }
                     }
                 }
@@ -36,15 +36,15 @@ int main()
             else {
                 for(int j=3;j>=1;j-=2){
                     for(int h=0;h<4;h++){
-                        if(abc[a[j][h]-'A'][0]==0){
-                            abc[a[j][h]-'A'][0]=j;
+                        if(abc[a[1-j/2][h]-'A'][0]==0){
+                            abc[a[1-j/2][h]-'A'][0]=j;
                         }
-                        else if(abc[a[j][h]-'A'][0]!=j){
-                            abc[a[j][h]-'A'][0]=2;
-                            abc[a[j][h]-'A'][1]=0;
+                        else if(abc[a[1-j/2][h]-'A'][0]!=j){
+                            abc[a[1-j/2][h]-'A'][0]=2;
+                            abc[a[1-j/2][h]-'A'][1]=0;
                         }
-                        else if(abc[a[j][h]-'A'][0]==j){
-                            abc[a[j][h]-'A'][1]=1;
+                        else if(abc[a[1-j/2][h]-'A'][0]==j){
+                            abc[a[1-j/2][h]-'A'][1]=1;
                         }
                     }
                 }
