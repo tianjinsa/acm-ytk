@@ -50,16 +50,18 @@ int main()
                 }
             }
         }
+        int fl=0;
         for(char j='A';j<='L';j++){
             if(abc[j-'A'][1]==1){
                 printf("%c is the counterfeit coin and it is %s.\n",j,abc[j-'A'][0]==3?"light":"heavy");
-                continue;
+                fl=1;
+                break;
             }
         }
-        for(char j='A';j<='L';j++){
+        for(char j='A';j<='L'&&fl==0;j++){
             if(abc[j-'A'][0]==1||abc[j-'A'][0]==3){
                 printf("%c is the counterfeit coin and it is %s.\n",j,abc[j-'A'][0]==3?"light":"heavy");
-                continue;
+                break;
             }
         }
 
