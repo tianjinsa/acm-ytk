@@ -19,7 +19,7 @@ int main()
     }
     long long sum=0;
     for(int i=0;i<n;i++){
-        if(xx[a[i]]>1&&xx[2*a[i]]>1&&(yy[a[i]]==0||yy[2*a[i]]==0)){
+        if(xx[a[i]]>1&&2*a[i]<=5000&&xx[2*a[i]]>1&&(yy[a[i]]==0||yy[2*a[i]]==0)){
             sum+=(cpls(xx[a[i]],2)*cpls(xx[2*a[i]],2));
             yy[a[i]]=1;
             yy[2*a[i]]=1;
