@@ -1,48 +1,35 @@
-#include<bits/stdc++.h>
-using namespace std;
-int b[1501]={0};
-bool a[100000000]={0};
-void ai_prime(int n)
+#include<stdio.h>
+long long x[1501];
+int min(int a,int b)
 {
-    for(int i=2;i*i<=n;i++){
-        if(a[i]==0){
-            for(int j=i*i;j<n;j+=i){
-                a[j]=1;
-            }
-        }
-    }
+    return a<b?a:b;
 }
-void sss()
+void sss(int n)
 {
-    int xx=0,x=0;
-    a[1]=a[2]=a[3]=a[5]=1;
-
-    while(1){
-        x++;
-        if(a[x]==0){
-            goto to;
+    int i2=0,i3=0,i5=0,xx=1;
+    x[0]=1;
+    for(int i=1;i<n;i++){
+        xx=min(x[i2]*2,min(x[i3]*3,x[i5]*5));
+        x[i]=xx;
+        if(xx==x[i2]*2){
+            i2++;
         }
-        for(int i=7;i<=x/2;i++){
-            if((a[i]==0&&x%i==0)){
-                goto to;
-            }
+        if(xx==x[i3]*3){
+            i3++;
         }
-        b[xx++]=x;
-        
-        if(xx==1501){
-            break;
+        if(xx==x[i5]*5){
+            i5++;
         }
-        to:
     }
 }
 int main()
 {
     int n;
-    
-    ai_prime(1000000);
-    sss();
-    while(scanf("%d",&n)&&n){
-        printf("%d\n",b[n-1]);
+    sss(1500);
+    while(scanf("%d",&n)&&n)
+    {
+        printf("%lld\n",x[n-1]);
     }
+
     return 0;
 }
