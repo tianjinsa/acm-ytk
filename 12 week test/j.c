@@ -12,9 +12,9 @@ long long cpls(int n,int k)//(下标，上标)
 int main()
 {
     int n,a[100001],xx[10010]={0},yy[10010]={0};
-    scanf("%d", &n);
-    for(int i=0; i<n; i++){
-        scanf("%d", &a[i]);
+    scanf("%d",&n);
+    for(int i=0;i<n;i++){
+        scanf("%d",&a[i]);
         xx[a[i]]++;
     }
     long long sum=0;
