@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 //using namespace std;
-void strrev(char s[])
+void revstr(char s[])
 {
     int i,j;
     char c;
@@ -16,9 +16,9 @@ int sss(char x[])
     int n=0;
     char *p;
     strcpy(temp,abc);
-    while((p=strstr(temp,x))||(strrev(x),p=strstr(temp,x))){
+    while((p=strstr(temp,x))||(revstr(x),p=strstr(temp,x))){
         n++;
-        memset(temp+(p-temp)/21*21,1,21);
+        memset(temp+(p-temp)/101*101,1,101);
     }
     return n;
 }
