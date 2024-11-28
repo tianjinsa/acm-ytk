@@ -12,12 +12,12 @@ int kx[3][1000];
 //     // strcat(t,abc);
 //     // strncpy(abc,t-n+strlen(abc),strlen(abc));
 // }
-void sss(char *abc, int n){
-    int len = strlen(abc);
-    n %= len;
-    strcpy(t, abc + len - n);
-    strncat(t, abc, len - n);
-    strcpy(abc, t);
+void sss(char *abc,int n){
+    int len=strlen(abc);
+    n%=len;
+    strcpy(t,abc+len-n);
+    strncat(t,abc,len-n);
+    strcpy(abc,t);
 }
 int main()
 {
