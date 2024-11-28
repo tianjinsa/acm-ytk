@@ -1,12 +1,12 @@
 #include<bits/stdc++.h>
 //using namespace std;
 char s[10001],k[3][10001];
-void sss(char *s,int n){
-    n%=strlen(s);
+void sss(char *abc,int n){
+    n%=strlen(abc);
     char t[20001];
-    strcpy(t,s);
-    strcpy(t,s);
-    strncpy(s,t-n,strlen(s));
+    strcpy(t,abc);
+    strcat(t,abc);
+    strncpy(abc,t-n+strlen(abc),strlen(abc));
 }
 int main()
 {
