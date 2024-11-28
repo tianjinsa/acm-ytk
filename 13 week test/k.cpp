@@ -10,47 +10,41 @@ void revstr(char s[])
         s[j]=c;
     }
 }
-char ch[101][101],abc[101*101],temp[101*101],x[101];
-int sss(char x[])
-{
-    int n=0;
-    char *p;
-    strcpy(temp,abc);
-    while((p=strstr(temp,x))||(revstr(x),p=strstr(temp,x))){
-        n++;
-        memset(temp+(p-temp)/101*101,1,101);
-    }
-    return n;
-}
+char ch[111][111],x[111],t[111];
 int main()
 {
-    int n,m,min=200,num[101];
+    int n,m,min,ll,minx;
     scanf("%d",&n);
     while(n--){
-        memset(abc,1,sizeof(abc));
-        abc[101*101-1]='\0';
+        min=111;
         scanf("%d",&m);
         for(int i=0;i<m;i++){
             scanf("%s",ch[i]);
-            for(int j=0;ch[i][j]!='\0';j++){
-                abc[i*101+j]=ch[i][j];
-            }
-            num[i]=strlen(ch[i]);
-            if(num[i]<min){
-                min=num[i];
+            ll=strlen(ch[i]);
+            if(ll<min){
+                min=ll;
+                minx=i;
             }
         }
-        for(int i=0;i<m;i++){
-            if(num[i]==min){
-                for(int j=strlen(ch[i]);j>=1;j--){
-                    for(int k=0;k<=strlen(ch[i])-j;k++){
-                        strncpy(x,ch[i]+k,j);
-                        x[j]='\0';
-                        if(sss(x)==m){
-                            printf("%lld\n",strlen(x));
-                            goto to;
-                        }
+        for(int j=min;j>=0;j--){
+            for(int k=0;k<=min-j;k++){
+                strncpy(x,ch[minx]+k,j);
+                x[j]='\0';
+                strcpy(t,x);
+                revstr(t);
+                t[j]='\0';
+                int ans=0;
+                for(int q=0;q<m;q++){
+                    if(strstr(ch[q],x)||strstr(ch[q],t)){
+                        ans++;
                     }
+                    else{
+                        break;
+                    }
+                }
+                if(ans==m){
+                    printf("%d\n",j);
+                    goto to;
                 }
             }
         }

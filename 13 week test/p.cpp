@@ -14,20 +14,27 @@ int main()
         printf("NO");
         return 0;
     }
-    memset(d,1,26);
-    memset(c,1,26);
+    memset(d,0,26);
+    memset(c,0,26);
     for(int i=0;i<strlen(a);i++){
         c[a[i]-'A']++;
         d[b[i]-'A']++;
     }
-    strcpy(a,d);
-    strcat(a,d);
-    strcat(a,d);
-    if(strstr(a,c)){
-        printf("YES");
+    int mm=0;
+    for(int i=0;i<26;i++){
+        for(int j=0;j<26&&c[i];j++){
+            if(c[i]==d[j]){
+                c[i]=0;
+                d[j]=0;
+            }
+        }
     }
-    else{
-        printf("NO");
+    for(int i=0;i<26;i++){
+        if(c[i]>0){
+            printf("NO");
+            return 0;
+        }
     }
+    printf("YES");
     return 0;
 }
