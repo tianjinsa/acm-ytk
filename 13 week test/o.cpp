@@ -36,7 +36,7 @@ int main()
         for(int i=0;i<k1;i++)s[kx[0][i]]=k[0][i];
         for(int i=0;i<k2;i++)s[kx[1][i]]=k[1][i];
         for(int i=0;i<k3;i++)s[kx[2][i]]=k[2][i];
-        puts(s);
+        scanf("%s",s);
     }
     return 0;
 }
