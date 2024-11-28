@@ -1,9 +1,8 @@
 #include<bits/stdc++.h>
 //using namespace std;
-char s[10001],k[3][10001];
+char s[100010],k[3][100010],t[200100];
 void sss(char *abc,int n){
     n%=strlen(abc);
-    char t[20001];
     strcpy(t,abc);
     strcat(t,abc);
     strncpy(abc,t-n+strlen(abc),strlen(abc));
