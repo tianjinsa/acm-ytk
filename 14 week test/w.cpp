@@ -1,54 +1,47 @@
 #include<bits/stdc++.h>
 //using namespace std;
-char xx[100000001][2][5];
-int a,b,x1[40];
-long long nt=40;
-void f1()
+char a[1001][1000];
+void ff()
 {
-    x1[0]=0;
-    x1[1]=1;
-    for(int i=2;i<40;i++){
-        x1[i]=x1[i-1]+x1[i-2];
-    }
-}
-void f2(int n)
-{
-    int abc[3][2];
-    abc[0][0]=atoi(xx[nt-1][0]);
-    abc[0][1]=atoi(xx[nt-1][1]);
-    abc[1][0]=atoi(xx[nt][0]);
-    abc[1][1]=atoi(xx[nt][1]);
-    for(;nt<=n;){
-        abc[2][0]=abc[1][0]+abc[0][0];
-        if(abc[2][0]>=10000){
-            abc[2][0]/=10;
+    strcpy(a[0],"0");
+    strcpy(a[1],"1");
+    for(int i=2;i<=1000;i++)
+    {
+        int tt=0;
+        int len1=strlen(a[i-1]);
+        int len2=strlen(a[i-2]);
+        for(int j=0;j<len1||j<len2||tt;j++)
+        {
+            int d1=(j<len1)?a[i-1][j]-'0':0;
+            int d2=(j<len2)?a[i-2][j]-'0':0;
+            int sum=d1+d2+tt;
+            a[i][j]=(sum%10)+'0';
+            tt=sum/10;
         }
-        abc[2][1]=(abc[1][1]+abc[0][1])%10000;
-        sprintf(xx[++nt][0],"%d",abc[2][0]);
-        sprintf(xx[nt][1],"%04d",abc[2][1]);
-        abc[0][0]=abc[1][0];
-        abc[1][0]=abc[2][0];
-        abc[0][1]=abc[1][1];
-        abc[1][1]=abc[2][1];
+    }
+    for(int i=0;i<=1000;i++)
+    {
+        int len=strlen(a[i]);
+        for(int j=0;j<len/2;j++)
+        {
+            char t=a[i][j];
+            a[i][j]=a[i][len-j-1];
+            a[i][len-j-1]=t;
+        }
     }
 }
 int main()
 {
-    f1();
-    strcpy(xx[39][0],"6324");
-    strcpy(xx[39][1],"5986");
-    strcpy(xx[40][0],"1023");
-    strcpy(xx[40][1],"4155");
-    long long nn;
-    while(scanf("%lld",&nn)!=EOF){
-        if(nn<=39){
-            printf("%d\n",x1[nn]);
-            continue;
+    int n;
+    ff();
+    while(scanf("%d",&n)!=EOF)
+    {
+        if(n<=39){
+            printf("%s\n",a[n]);
         }
-        if(nn>nt){
-            f2(nn);
+        else{
+            printf("%c%c%c%c...%c%c%c%c\n",a[n][0],a[n][1],a[n][2],a[n][3],a[n][strlen(a[n])-4],a[n][strlen(a[n])-3],a[n][strlen(a[n])-2],a[n][strlen(a[n])-1]);
         }
-        printf("%s...%s\n",xx[nn][0],xx[nn][1]);
     }
     return 0;
 }
