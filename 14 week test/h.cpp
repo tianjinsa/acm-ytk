@@ -13,22 +13,27 @@ int min(int x,int y)
 }
 void ff(int x,int y)
 {
+    bool fl1=false,fl2=false,fl3=false,fl4=false;
     if(x+1<aa&&map[x+1][y]!='X'){
         map[x+1][y]+=min(x+1,y);
-        ff(x+1,y);
+        fl1=true;
     }
     if(y+1<bb&&map[x][y+1]!='X'){
         map[x][y+1]+=min(x,y+1);
-        ff(x,y+1);
+        fl2=true;
     }
     if(y-1>=0&&map[x][y-1]!='X'){
         map[x][y-1]+=min(x,y-1);
-        ff(x,y-1);
+        fl3=true;
     }
     if(x-1>=0&&map[x-1][y]!='X'){
         map[x-1][y]+=min(x-1,y);
-        ff(x-1,y);
+        fl4=true;
     }
+    if(fl1) ff(x+1,y);
+    if(fl2) ff(x,y+1);
+    if(fl3) ff(x,y-1);
+    if(fl4) ff(x-1,y);
     return;
 }
 int main()
