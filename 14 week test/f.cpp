@@ -1,12 +1,12 @@
 #include<bits/stdc++.h>
 //using namespace std;
-int a[1111];
-bool fl[1111];
+int a[1111],b[1111];
+
 int main()
 {
-    int n,m,mt,minx;
+    int n,m;
     while(scanf("%d",&n)&&n){
-        int min=0x7fffffff;
+        memset(b,0,sizeof(b));
         for(int i=0;i<n;i++){
             scanf("%d",&a[i]);
         }
@@ -18,30 +18,14 @@ int main()
         }
         if(m==5){
             printf("%d\n",m-a[n-1]);
+            continue;
         }
-        for(int i=0;i<n;i++){
-            mt=m;
-            for(int j=i;mt-a[i]>=5&&j<n;j++){
-                mt-=a[j];
-                if(j==n-1){
-                    fl[i]=1;
-                }
-            }
-            if(mt<=min){
-                min=mt;
-                minx=i;
-                if(min==5){
-                    break;
-                }
+        for(int i=0;i<n-1;i++){
+            for(int j=m-5;j>=a[i];j--){
+                b[j]=(b[j]>b[j-a[i]]+a[i])?b[j]:b[j-a[i]]+a[i];
             }
         }
-        if(fl[minx]==0){
-            min-=a[n-1];
-        }
-        else{
-            min-=a[minx-1];
-        }
-        printf("%d\n",min);
+        printf("%d\n",m-b[m-5]-a[n-1]);
     }
     return 0;
 }
