@@ -1,0 +1,47 @@
+{
+    // Place your snippets for c here. Each snippet is defined under a snippet name and has a prefix, body and 
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+    // same ids are connected.
+    // Example:
+    "c#stdio": {
+        "scope": "c",
+        "prefix": "cst", //在新建立的页面中输入c就会有智能提示，Tab就自动生成好了
+        "body": [
+            "#include<stdio.h>",
+            "", //空行
+            "int main()", //main()函数
+            "{",
+            "    $0", //最终光标会在这里等待输入
+            "    return 0;", //结束
+            "}",
+        ],
+        "description": "生成C模板" //用户输入后智能提示的内容（你可以用中文写“生成C模板”）
+    },
+    "c++#stdio": {
+        "scope": "cpp",
+        "prefix": "cstpp", //在新建立的页面中输入c就会有智能提示，Tab就自动生成好了
+        "body": [
+            "#include<bits/stdc++.h>",
+            "//using namespace std;",
+            "", //空行
+            "int main()", //main()函数
+            "{",
+            "    $0", //最终光标会在这里等待输入
+            "    return 0;", //结束
+            "}",
+        ],
+        "description": "生成Cpp模板" //用户输入后智能提示的内容（你可以用中文写“生成C模板”）
+    },
+    "生成结构体": {
+        "scope": "c,cpp",
+        "prefix": "typedef", //在新建立的页面中输入c就会有智能提示，Tab就自动生成好了
+        "body": [
+            "typedef struct",
+            "{",
+            "    ${2:/*body*/}",
+            "}${1/(.*)/${1:/upcase}/};"
+        ],
+        "description": "生成结构体模板" //用户输入后智能提示的内容（你可以用中文写“生成C模板”）
+    },
+}
