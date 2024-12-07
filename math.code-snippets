@@ -1,0 +1,143 @@
+{
+	// Place your 全局 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	"apls A排列数": {
+		"scope": "c,cpp",
+		"prefix": "apls",
+		"body": [
+			"long long apls(int x,int y)//(下标，上标)",
+			"{",
+			"    long long z=1;",
+			"    for(int i=x;i>x-y;i--){",
+			"        z*=i;",
+			"    }",
+			"    return z;",
+			"}"
+		],
+		"description": "fun A排列数"
+	},
+
+    "cpls C组合数": {
+		"scope": "c,cpp",
+		"prefix": "cpls",
+		"body": [
+            "long long cpls(int n,int k)//(下标，上标)",
+            "{",
+            "    if(k>n-k)k=n-k;",
+            "    long long xx=1;",
+            "    for(int i=0;i<k;i++){",
+            "        xx*=(n-i);",
+            "        xx/=(i+1);",
+            "    }",
+            "    return xx;",
+            "}"
+		],
+		"description": "fun C组合数"
+	},
+    "derangement 错排数": {
+		"scope": "c,cpp",
+        "prefix": ["derangement", "cuopaishu"],
+		"body": [
+            "long long derangement(int n)",
+            "{",
+            "    long long dp[n+1];",
+            "    dp[2]=1;",
+            "    dp[3]=2;",
+            "    for(int i=4;i<=n;i++){",
+            "        dp[i]=(i-1)*(dp[i-1]+dp[i-2]);",
+            "    }",
+            "    return dp[n];",
+            "}"
+		],
+		"description": "fun 错排数"
+	},
+
+    "derangement 错排数(打表)": {
+		"scope": "c,cpp",
+        "prefix": ["derangement", "cuopaishu"],
+		"body": [
+            "void derangement(int dp[],int n)//打表打到n",
+            "{",
+            "    dp[2]=1;",
+            "    dp[3]=2;",
+            "    for(int i=4;i<=n;i++){",
+            "        dp[i]=(i-1)*(dp[i-1]+dp[i-2]);",
+            "    }",
+            "}"
+		],
+		"description": "fun 错排数(打表)"
+	},
+
+    "gcd+lcm": {
+        "scope": "c,cpp",
+        "prefix": "lcm",
+        "body": [
+            "long long gcd(long long a,long long b)",
+            "{",
+            "    return (b==0)?a:gcd(b,a%b);",
+            "}",
+            "long long lcm(long long a,long long b)",
+            "{",
+            "    return a*b/gcd(a,b);",
+            "}"
+        ],
+        "description": "fun 最小公倍数+最大公约数"
+    },
+
+    "gcd": {
+        "scope": "c,cpp",
+        "prefix": "gcd",
+        "body": [
+            "long long gcd(long long a,long long b)",
+            "{",
+            "    return (b==0)?a:gcd(b,a%b);",
+            "}"
+        ],
+        "description": "fun 最大公约数"
+    },
+    "ai_prime": {
+        "scope": "c,cpp",
+        "prefix": "ai_prime",
+        "body": [
+            "void ai_prime(bool a[],int n)//艾氏筛素数表",
+            "{",
+            "    for(int i=2;i*i<=n;i++){",
+            "        if(a[i]==0){",
+            "            for(int j=i*i;j<n;j+=i){",
+            "                a[j]=1;",
+            "            }",
+            "        }",
+            "    }",
+            "}"
+        ],
+        "description": "fun 艾氏筛素数表"
+    },
+    "min": {
+        "scope": "c,cpp",
+        "prefix": "min",
+        "body": [
+            "int min(int a,int b)",
+            "{",
+            "    return a<b?a:b;",
+            "}"
+        ],
+        "description": "fun 求最小值"
+    },
+    //max
+    "max": {
+        "scope": "c,cpp",
+        "prefix": "max",
+        "body": [
+            "int max(int a,int b)",
+            "{",
+            "    return a>b?a:b;",
+            "}"
+        ],
+        "description": "fun 求最大值"
+    }
+}

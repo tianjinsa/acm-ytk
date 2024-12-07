@@ -1,0 +1,64 @@
+{
+    // Place your 全局 snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+    // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+    // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+    // used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+    // Placeholders with the same ids are connected.
+    // Example:
+    "BubbleSort 冒泡排序": {
+        "scope": "c,cpp",
+        "prefix": "BubbleSort冒泡",
+        "body": [
+            "void BubbleSort(int arr[],int n)",
+            "{",
+            "    int i,j,temp;",
+            "    for(i=0;i<n-1;i++){",
+            "        int flag=0;",
+            "        for (j=0;j<n-i-1;j++){",
+            "            if (arr[j]>arr[j+1]){",
+            "                temp=arr[j];",
+            "                arr[j]=arr[j+1];",
+            "                arr[j+1]=temp;",
+            "                flag=1;",
+            "            }",
+            "        }",
+            "        if (flag==0){",
+            "            break;",
+            "        }",
+            "    }",
+            "}"
+        ],
+        "description": "fun 冒泡排序"
+    },
+    "quickSort3Way 快速排序": {
+        "scope": "c,cpp",
+        "prefix": "quickSort3Way快速排序",
+        "body": [
+            "void swap(int*a,int*b){",
+            "    int temp=*a;",
+            "    *a=*b;",
+            "    *b=temp;",
+            "}",
+            "void quickSort3Way(int arr[],int low,int high){",
+            "    if (low<high){",
+            "        int lt=low, gt=high;",
+            "        int pivot=arr[low];",
+            "        int i=low+1;",
+            "        while (i<=gt){",
+            "            if(arr[i]<pivot){",
+            "                swap(&arr[lt++],&arr[i++]);",
+            "            } else if(arr[i]>pivot){",
+            "                swap(&arr[i],&arr[gt--]);",
+            "            } else{",
+            "                i++;",
+            "            }",
+            "        }",
+            "        quickSort3Way(arr,low,lt-1);",
+            "        quickSort3Way(arr,gt+1,high);",
+            "    }",
+            "}"
+        ],
+        "description": "fun 快速排序（三向切分）"
+    }
+}
