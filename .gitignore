@@ -3,3 +3,5 @@
 *temp*
 *.cph*
 *.bin
+.idea/
+.vscode/
