@@ -2,6 +2,7 @@
 using namespace std;
 map<string, int> mp;
 int main()
+
 {
     int n;
     scanf("%d",&n);
