@@ -5,8 +5,8 @@ int main()
 {
     __int128 a;
     string s;
-    cin >> s;
-    a = 0;
+    cin>>s;
+    a=0;
     for(int i=0;i<s.length();i++){
         a=a*10+(s[i]-'0');
     }
