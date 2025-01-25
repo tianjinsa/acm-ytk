@@ -48,7 +48,6 @@ int main()
                 ans=min(ans,(int)mp.size());
                 mp.clear();
             }
-            
         }
     }
     printf("%d\n",ans);
