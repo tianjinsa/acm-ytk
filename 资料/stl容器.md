@@ -1,0 +1,1412 @@
+# C++ STL容器使用指南
+
+## 目录
+- [容器分类](#容器分类)
+  - [序列式容器](#序列式容器)
+  - [关联式容器](#关联式容器)
+  - [无序关联式容器](#无序关联式容器)
+  - [容器适配器](#容器适配器)
+- [序列式容器](#序列式容器)
+- [关联式容器](#关联式容器)
+- [无序关联式容器](#无序关联式容器)
+- [容器适配器](#容器适配器)
+- [性能对比](#性能对比)
+- [最佳实践](#最佳实践)
+
+## 容器分类
+
+### 序列式容器
+
+基本特点:
+- 按照线性顺序存储元素
+- 包括：vector, deque, list 
+
+### 关联式容器
+
+基本特点:
+- 通过键来存储和访问元素
+- 包括：set, map
+
+### 无序关联式容器
+
+基本特点:
+- 通过哈希函数组织元素
+- 包括：unordered_set, unordered_map
+
+### 容器适配器
+
+基本特点:
+- 基于其他容器实现的接口
+- 包括：queue, priority_queue
+
+# 序列式容器
+
+## vector: 动态数组
+
+动态数组是最常用的容器，它提供了快速的随机访问能力和高效的尾部操作。
+
+### 使用场景
+
+- 需要频繁随机访问元素
+- 主要在尾部进行插入和删除操作
+- 需要动态改变容器大小
+- `push_back(const T& value)`: 在末尾添加一个元素。
+
+  ```cpp
+  std::vector<int> vec;
+  vec.push_back(10);
+  ```
+- `pop_back()`: 删除末尾的元素。
+
+  ```cpp
+  vec.pop_back();
+  ```
+- `size() const`: 返回容器中元素的个数。
+
+  ```cpp
+  size_t size = vec.size();
+  ```
+- `empty() const`: 检查容器是否为空。
+
+  ```cpp
+  if (vec.empty()) {
+      // 容器为空
+  }
+  ```
+- `at(size_t pos)`: 访问指定位置的元素。
+
+  ```cpp
+  int value = vec.at(0);
+  ```
+- `clear()`: 清空所有元素。
+
+  ```cpp
+  vec.clear();
+  ```
+- `insert(iterator pos, const T& value)`: 在指定位置插入元素。
+
+  ```cpp
+  vec.insert(vec.begin(), 5);
+  ```
+- `erase(iterator pos)`: 删除指定位置的元素。
+
+  ```cpp
+  vec.erase(vec.begin());
+  ```
+- `emplace_back(Args&&... args)`: 在末尾原位构造一个元素。
+
+  ```cpp
+  vec.emplace_back(20);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::vector<int> vec1; // 默认构造
+std::vector<int> vec2(5, 10); // 5 个值为 10 的元素
+std::vector<int> vec3 = {1, 2, 3, 4, 5}; // 使用初始化列表
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+vec1.push_back(15);
+vec1.emplace_back(20);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+vec1.pop_back();
+vec1.erase(vec1.begin());
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+int first = vec1.front();
+int last = vec1.back();
+int second = vec1.at(1);
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+vec1.reserve(100); // 预留空间
+size_t current_capacity = vec1.capacity();
+```
+
+### 排序和反转
+
+```cpp
+// 排序和反转
+std::sort(vec1.begin(), vec1.end());
+std::reverse(vec1.begin(), vec1.end());
+```
+
+### 拼接操作
+
+```cpp
+// 拼接操作
+std::vector<int> vec4 = {6, 7, 8};
+vec1.insert(vec1.end(), vec4.begin(), vec4.end());
+```
+
+### 迭代器操作
+
+```cpp
+// 迭代器操作
+for (auto it = vec1.begin(); it != vec1.end(); ++it) {
+    std::cout << *it << " ";
+}
+```
+
+### 其他常用函数
+
+```cpp
+resize(size_t count): 调整容器大小
+vec1.resize(10);
+
+shrink_to_fit(): 请求容器收缩至当前大小
+vec1.shrink_to_fit();
+
+data(): 返回指向内部数组首元素的指针
+int* ptr = vec1.data();
+
+begin(), end(), rbegin(), rend() 等迭代器接口
+const 版本对应 cbegin(), cend(), crbegin(), crend()
+```
+
+### 反向迭代器变体
+- `rbegin()`, `rend()`: 用于反向迭代
+- `crbegin()`, `crend()`: const 反向迭代器
+
+### emplace系列变体
+- `emplace()`: 原位构造，C++17后支持
+- `emplace_back()`: 在尾部原位构造
+- `emplace_hint()`: 提供插入位置提示的原位构造
+
+### 主要特点：
+
+- 动态大小，自动管理内存。
+- 支持快速随机访问。
+- 高效的尾部插入和删除操作。
+
+## deque: 双端队列
+
+双端队列支持在两端进行快速插入和删除操作，同时也允许随机访问。
+
+### 使用场景
+
+- 需要在两端频繁插入和删除元素
+- 需要随机访问元素
+- 对中间元素的插入删除操作相对较少
+- `push_front(const T& value)`: 在前端添加一个元素。
+
+  ```cpp
+  std::deque<int> deq;
+  deq.push_front(5);
+  ```
+- `push_back(const T& value)`: 在末尾添加一个元素。
+
+  ```cpp
+  deq.push_back(10);
+  ```
+- `pop_front()`: 删除前端的元素。
+
+  ```cpp
+  deq.pop_front();
+  ```
+- `pop_back()`: 删除末尾的元素。
+
+  ```cpp
+  deq.pop_back();
+  ```
+- `size() const`: 返回容器中元素的个数。
+
+  ```cpp
+  size_t size = deq.size();
+  ```
+- `empty() const`: 检查容器是否为空。
+
+  ```cpp
+  if (deq.empty()) {
+      // 容器为空
+  }
+  ```
+- `at(size_t pos)`: 访问指定位置的元素。
+
+  ```cpp
+  int value = deq.at(0);
+  ```
+- `clear()`: 清空所有元素。
+
+  ```cpp
+  deq.clear();
+  ```
+- `insert(iterator pos, const T& value)`: 在指定位置插入元素。
+
+  ```cpp
+  deq.insert(deq.begin(), 15);
+  ```
+- `erase(iterator pos)`: 删除指定位置的元素。
+
+  ```cpp
+  deq.erase(deq.begin());
+  ```
+- `emplace_front(Args&&... args)`: 在前端原位构造一个元素。
+
+  ```cpp
+  deq.emplace_front(20);
+  ```
+- `emplace_back(Args&&... args)`: 在末尾原位构造一个元素。
+
+  ```cpp
+  deq.emplace_back(25);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::deque<int> deq1; // 默认构造
+std::deque<int> deq2(5, 10); // 5 个值为 10 的元素
+std::deque<int> deq3 = {1, 2, 3, 4, 5}; // 使用初始化列表
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+deq1.push_back(15);
+deq1.emplace_back(20);
+deq1.push_front(5);
+deq1.emplace_front(10);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+deq1.pop_back();
+deq1.pop_front();
+deq1.erase(deq1.begin());
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+int first = deq1.front();
+int last = deq1.back();
+int second = deq1.at(1);
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+deq1.reserve(100); // 预留空间（注意：deque 没有 reserve，示例仅供参考）
+size_t current_capacity = deq1.capacity(); // 此操作在 deque 中不可用
+```
+
+### 排序和反转
+
+```cpp
+// 排序和反转
+std::sort(deq1.begin(), deq1.end());
+std::reverse(deq1.begin(), deq1.end());
+```
+
+### 拼接操作
+
+```cpp
+// 拼接操作
+std::deque<int> deq4 = {6, 7, 8};
+deq1.insert(deq1.end(), deq4.begin(), deq4.end());
+```
+
+### 迭代器操作
+
+```cpp
+// 迭代器操作
+for (auto it = deq1.begin(); it != deq1.end(); ++it) {
+    std::cout << *it << " ";
+}
+```
+
+### 其他常用函数
+
+```cpp
+resize(size_t count): 调整容器大小
+deq1.resize(10);
+
+shrink_to_fit() (C++23 提供，部分编译器支持)
+deq1.shrink_to_fit();
+
+data() (C++23 提供，部分编译器支持)
+int* ptr = deq1.data();
+```
+
+### 注意：deque 特有的限制
+- `reserve()`: 不支持，因为deque内部结构是分段连续的
+- `capacity()`: 不支持，原因同上
+- `shrink_to_fit()`: 部分编译器支持，效果可能不明显
+
+### 主要特点：
+
+- 支持在两端高效的插入和删除操作。
+- 自动管理内存，适合频繁在两端操作的场景。
+- 支持随机访问，但速度略低于 `vector`。
+
+## list: 双向链表
+
+双向链表支持在任何位置进行常数时间的插入和删除操作。
+
+### 使用场景
+
+- 需要频繁在任意位置插入和删除元素
+- 不需要随机访问元素
+- 需要频繁的元素重排
+- `push_front(const T& value)`: 在前端添加一个元素。
+
+  ```cpp
+  std::list<int> lst;
+  lst.push_front(5);
+  ```
+- `push_back(const T& value)`: 在末尾添加一个元素。
+
+  ```cpp
+  lst.push_back(10);
+  ```
+- `pop_front()`: 删除前端的元素。
+
+  ```cpp
+  lst.pop_front();
+  ```
+- `pop_back()`: 删除末尾的元素。
+
+  ```cpp
+  lst.pop_back();
+  ```
+- `size() const`: 返回容器中元素的个数。
+
+  ```cpp
+  size_t size = lst.size();
+  ```
+- `empty() const`: 检查容器是否为空。
+
+  ```cpp
+  if (lst.empty()) {
+      // 容器为空
+  }
+  ```
+- `clear()`: 清空所有元素。
+
+  ```cpp
+  lst.clear();
+  ```
+- `insert(iterator pos, const T& value)`: 在指定位置插入元素。
+
+  ```cpp
+  lst.insert(lst.begin(), 15);
+  ```
+- `erase(iterator pos)`: 删除指定位置的元素。
+
+  ```cpp
+  lst.erase(lst.begin());
+  ```
+- `splice(iterator pos, list& other)`: 将其他列表的元素移动到此列表。
+
+  ```cpp
+  std::list<int> other = {20, 25};
+  lst.splice(lst.end(), other);
+  ```
+- `emplace_front(Args&&... args)`: 在前端原位构造一个元素。
+
+  ```cpp
+  lst.emplace_front(30);
+  ```
+- `emplace_back(Args&&... args)`: 在末尾原位构造一个元素。
+
+  ```cpp
+  lst.emplace_back(35);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::list<int> lst1; // 默认构造
+std::list<int> lst2(5, 10); // 5 个值为 10 的元素
+std::list<int> lst3 = {1, 2, 3, 4, 5}; // 使用初始化列表
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+lst1.push_back(15);
+lst1.emplace_back(20);
+lst1.push_front(5);
+lst1.emplace_front(10);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+lst1.pop_back();
+lst1.pop_front();
+lst1.erase(lst1.begin());
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+int first = lst1.front();
+int last = lst1.back();
+int second = *(++lst1.begin());
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+// list 不支持 reserve
+size_t current_size = lst1.size();
+```
+
+### 排序和反转
+
+```cpp
+// 排序和反转
+lst1.sort();
+lst1.reverse();
+```
+
+### 拼接操作
+
+```cpp
+// 拼接操作
+std::list<int> lst4 = {6, 7, 8};
+lst1.splice(lst1.end(), lst4);
+```
+
+### 迭代器操作
+
+```cpp
+// 迭代器操作
+for (auto it = lst1.begin(); it != lst1.end(); ++it) {
+    std::cout << *it << " ";
+}
+```
+
+### 其他常用函数
+
+```cpp
+merge(list& other): 合并另一个有序链表
+lst1.merge(lst2);
+
+unique(): 移除相邻重复元素
+lst1.unique();
+
+emplace(iterator pos, Args&&... args): 在指定位置原位构造元素
+auto it = lst1.begin();
+lst1.emplace(it, 50);
+```
+
+### list 特有的操作
+- `splice_after()`: 移动元素到指定位置之后
+- `merge()`: 合并两个已排序的链表
+- `reverse()`: 反转整个链表
+- `unique()`: 移除连续的重复元素
+
+### list 的限制
+- 不支持随机访问操作符 ([])
+- 不支持算术运算的迭代器操作
+
+### 主要特点：
+
+- 双向链表，支持高效的插入和删除操作。
+- 不支持随机访问，适合需要频繁修改中间元素的场景。
+- 自动管理内存，但占用更多内存空间。
+
+# 关联式容器
+
+## set: 有序集合
+
+有序集合自动将元素按升序排列，并保证元素的唯一性。
+
+### 使用场景
+
+- 需要维护有序的唯一元素集合
+- 需要快速查找元素
+- 需要范围查询功能
+- `insert(const T& value)`: 插入一个元素。
+
+  ```cpp
+  std::set<int> s;
+  s.insert(10);
+  ```
+- `erase(const T& value)`: 删除指定元素。
+
+  ```cpp
+  s.erase(10);
+  ```
+- `find(const T& value)`: 查找元素。
+
+  ```cpp
+  auto it = s.find(10);
+  ```
+- `count(const T& value) const`: 计算元素出现次数。
+
+  ```cpp
+  size_t cnt = s.count(10);
+  ```
+- `size() const`: 返回容器中元素的个数。
+
+  ```cpp
+  size_t size = s.size();
+  ```
+- `empty() const`: 检查容器是否为空。
+
+  ```cpp
+  if (s.empty()) {
+      // 容器为空
+  }
+  ```
+- `clear()`: 清空所有元素。
+
+  ```cpp
+  s.clear();
+  ```
+- `emplace(Args&&... args)`: 原位插入一个元素。
+
+  ```cpp
+  s.emplace(15);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::set<int> s1; // 默认构造
+std::set<int> s2 = {1, 2, 3, 4, 5}; // 使用初始化列表
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+s1.insert(10);
+s1.emplace(15);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+s1.erase(10);
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+auto it = s1.find(15);
+if (it != s1.end()) {
+    std::cout << *it;
+}
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+size_t current_size = s1.size();
+bool is_empty = s1.empty();
+```
+
+### 排序和反转
+
+set 自动排序，不能反转
+
+### 拼接操作
+
+```cpp
+// 拼接操作
+std::set<int> s3 = {6, 7, 8};
+s1.insert(s3.begin(), s3.end());
+```
+
+### 迭代器操作
+
+```cpp
+// 迭代器操作
+for (auto it = s1.begin(); it != s1.end(); ++it) {
+    std::cout << *it << " ";
+}
+```
+
+### 其他常用函数
+
+```cpp
+lower_bound(const Key& key): 返回第一个不小于 key 的迭代器
+auto lb = s1.lower_bound(2);
+
+upper_bound(const Key& key): 返回第一个大于 key 的迭代器
+auto ub = s1.upper_bound(2);
+
+equal_range(const Key& key): 同时获取 lower_bound 和 upper_bound
+auto range = s1.equal_range(2);
+```
+
+### 主要特点：
+
+- 元素唯一且自动有序。
+- 基于红黑树实现，插入、删除、查找操作高效。
+- 不支持随机访问。
+
+## map: 有序键值对
+
+有序映射存储键值对，并按键的升序排列。
+
+### 使用场景
+
+- 需要建立键到值的映射关系
+- 需要按键的顺序访问元素
+- 需要高效的键值查找
+- `insert(pair<const Key, T>& value)`: 插入一个键值对。
+
+  ```cpp
+  std::map<int, std::string> m;
+  m.insert({1, "one"});
+  ```
+- `erase(const Key& key)`: 删除指定键的元素。
+
+  ```cpp
+  m.erase(1);
+  ```
+- `find(const Key& key)`: 查找键对应的元素。
+
+  ```cpp
+  auto it = m.find(1);
+  ```
+- `count(const Key& key) const`: 计算键出现次数。
+
+  ```cpp
+  size_t cnt = m.count(1);
+  ```
+- `size() const`: 返回容器中元素的个数。
+
+  ```cpp
+  size_t size = m.size();
+  ```
+- `empty() const`: 检查容器是否为空。
+
+  ```cpp
+  if (m.empty()) {
+      // 容器为空
+  }
+  ```
+- `clear()`: 清空所有元素。
+
+  ```cpp
+  m.clear();
+  ```
+- `operator[](const Key& key)`: 访问或插入键对应的值。
+
+  ```cpp
+  m[2] = "two";
+  ```
+- `emplace(Args&&... args)`: 原位插入一个键值对。
+
+  ```cpp
+  m.emplace(3, "three");
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::map<int, std::string> m1; // 默认构造
+std::map<int, std::string> m2 = {{1, "one"}, {2, "two"}}; // 使用初始化列表
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+m1.insert({3, "three"});
+m1.emplace(4, "four");
+m1[5] = "five";
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+m1.erase(3);
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+auto it = m1.find(4);
+if (it != m1.end()) {
+    std::cout << it->second;
+}
+std::string value = m1[5];
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+size_t current_size = m1.size();
+bool is_empty = m1.empty();
+```
+
+### 排序和反转
+
+map 自动按键排序，不能反转
+
+### 拼接操作
+
+```cpp
+// 拼接操作
+std::map<int, std::string> m3 = {{6, "six"}, {7, "seven"}};
+m1.insert(m3.begin(), m3.end());
+```
+
+### 迭代器操作
+
+```cpp
+// 迭代器操作
+for (auto it = m1.begin(); it != m1.end(); ++it) {
+    std::cout << it->first << ": " << it->second << " ";
+}
+```
+
+### 其他常用函数
+
+```cpp
+lower_bound(const Key& key): 返回第一个不小于 key 的迭代器
+auto lb = m1.lower_bound(2);
+
+upper_bound(const Key& key): 返回第一个大于 key 的迭代器
+auto ub = m1.upper_bound(2);
+
+equal_range(const Key& key): 同时获取 lower_bound 和 upper_bound
+auto range = m1.equal_range(2);
+```
+
+### 主要特点：
+
+- 键值对，键唯一且自动有序。
+- 基于红黑树实现，插入、删除、查找操作高效。
+- 支持通过键直接访问或修改值。
+
+# 无序关联式容器
+
+## unordered_set: 哈希集合
+
+基于哈希表实现的集合，提供常数时间的元素访问。
+
+### 使用场景
+
+- 只需要判断元素是否存在
+- 不需要元素保持有序
+- 追求最快的元素查找速度
+- `insert(const T& value)`: 插入一个元素。
+
+  ```cpp
+  std::unordered_set<int> us;
+  us.insert(10);
+  ```
+- `erase(const T& value)`: 删除指定元素。
+
+  ```cpp
+  us.erase(10);
+  ```
+- `find(const T& value)`: 查找元素。
+
+  ```cpp
+  auto it = us.find(10);
+  ```
+- `count(const T& value) const`: 计算元素出现次数。
+
+  ```cpp
+  size_t cnt = us.count(10);
+  ```
+- `size() const`: 返回容器中元素的个数。
+
+  ```cpp
+  size_t size = us.size();
+  ```
+- `empty() const`: 检查容器是否为空。
+
+  ```cpp
+  if (us.empty()) {
+      // 容器为空
+  }
+  ```
+- `clear()`: 清空所有元素。
+
+  ```cpp
+  us.clear();
+  ```
+- `emplace(Args&&... args)`: 原位插入一个元素。
+
+  ```cpp
+  us.emplace(15);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::unordered_set<int> us1; // 默认构造
+std::unordered_set<int> us2 = {1, 2, 3, 4, 5}; // 使用初始化列表
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+us1.insert(10);
+us1.emplace(15);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+us1.erase(10);
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+auto it = us1.find(15);
+if (it != us1.end()) {
+    std::cout << *it;
+}
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+size_t current_size = us1.size();
+bool is_empty = us1.empty();
+```
+
+### 排序和反转
+
+unordered_set 不支持排序和反转。
+
+### 拼接操作
+
+```cpp
+// 拼接操作
+std::unordered_set<int> us3 = {6, 7, 8};
+us1.insert(us3.begin(), us3.end());
+```
+
+### 迭代器操作
+
+```cpp
+// 迭代器操作
+for (auto it = us1.begin(); it != us1.end(); ++it) {
+    std::cout << *it << " ";
+}
+```
+
+### 其他常用函数
+
+```cpp
+bucket_count(): 返回当前哈希桶数量
+size_t n = us1.bucket_count();
+
+load_factor(): 返回当前负载因子
+float lf = us1.load_factor();
+
+rehash(size_t n): 重新配置哈希桶数量
+us1.rehash(20);
+```
+
+### 主要特点：
+
+- 元素唯一，基于哈希表实现，无序存储。
+- 插入、删除、查找操作平均常数时间复杂度。
+- 不支持有序遍历。
+
+## unordered_map: 哈希表
+
+基于哈希表实现的键值对容器，提供常数时间的元素访问。
+
+### 使用场景
+
+- 需要快速的键值查找
+- 不需要键值对保持有序
+- 存储大量数据时需要高效查找
+- `insert(pair<const Key, T>& value)`: 插入一个键值对。
+
+  ```cpp
+  std::unordered_map<int, std::string> um;
+  um.insert({1, "one"});
+  ```
+- `erase(const Key& key)`: 删除指定键的元素。
+
+  ```cpp
+  um.erase(1);
+  ```
+- `find(const Key& key)`: 查找键对应的元素。
+
+  ```cpp
+  auto it = um.find(1);
+  ```
+- `count(const Key& key) const`: 计算键出现次数。
+
+  ```cpp
+  size_t cnt = um.count(1);
+  ```
+- `size() const`: 返回容器中元素的个数。
+
+  ```cpp
+  size_t size = um.size();
+  ```
+- `empty() const`: 检查容器是否为空。
+
+  ```cpp
+  if (um.empty()) {
+      // 容器为空
+  }
+  ```
+- `clear()`: 清空所有元素。
+
+  ```cpp
+  um.clear();
+  ```
+- `operator[](const Key& key)`: 访问或插入键对应的值。
+
+  ```cpp
+  um[2] = "two";
+  ```
+- `emplace(Args&&... args)`: 原位插入一个键值对。
+
+  ```cpp
+  um.emplace(3, "three");
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::unordered_map<int, std::string> um1; // 默认构造
+std::unordered_map<int, std::string> um2 = {{1, "one"}, {2, "two"}}; // 使用初始化列表
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+um1.insert({3, "three"});
+um1.emplace(4, "four");
+um1[5] = "five";
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+um1.erase(3);
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+auto it = um1.find(4);
+if (it != um1.end()) {
+    std::cout << it->second;
+}
+std::string value = um1[5];
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+size_t current_size = um1.size();
+bool is_empty = um1.empty();
+```
+
+### 排序和反转
+
+```cpp
+// 排序和反转
+// unordered_map 不支持排序和反转
+```
+
+### 拼接操作
+
+```cpp
+// 拼接操作
+std::unordered_map<int, std::string> um3 = {{6, "six"}, {7, "seven"}};
+um1.insert(um3.begin(), um3.end());
+```
+
+### 迭代器操作
+
+```cpp
+// 迭代器操作
+for (auto it = um1.begin(); it != um1.end(); ++it) {
+    std::cout << it->first << ": " << it->second << " ";
+}
+```
+
+### 其他常用函数
+
+```cpp
+bucket_count(): 返回当前哈希桶数量
+size_t bn = um1.bucket_count();
+
+load_factor(): 返回当前负载因子
+float lf = um1.load_factor();
+
+rehash(size_t n): 重新配置哈希桶数量
+um1.rehash(20);
+```
+
+### 主要特点：
+
+- 键值对，键唯一，基于哈希表实现，无序存储。
+- 插入、删除、查找操作平均常数时间复杂度。
+- 支持通过键直接访问或修改值。
+
+# 容器适配器
+
+## queue: 队列
+
+实现先进先出(FIFO)的数据结构。
+
+### 使用场景
+
+- 需要按照先进先出的顺序处理元素
+- 实现广度优先搜索
+- 需要按照时间顺序处理任务
+- `push(const T& value)`: 添加一个元素到队列末尾。
+
+  ```cpp
+  std::queue<int> q;
+  q.push(10);
+  ```
+- `pop()`: 移除队列前端的元素。
+
+  ```cpp
+  q.pop();
+  ```
+- `front()`: 访问队列前端的元素。
+
+  ```cpp
+  int front = q.front();
+  ```
+- `back()`: 访问队列末尾的元素。
+
+  ```cpp
+  int back = q.back();
+  ```
+- `empty() const`: 检查队列是否为空。
+
+  ```cpp
+  if (q.empty()) {
+      // 队列为空
+  }
+  ```
+- `size() const`: 返回队列中元素的个数。
+
+  ```cpp
+  size_t size = q.size();
+  ```
+- `emplace(Args&&... args)`: 原位添加一个元素到队列末尾。
+
+  ```cpp
+  q.emplace(20);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::queue<int> q1; // 默认构造
+std::queue<int> q2;
+q2.push(1);
+q2.push(2);
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+q1.push(10);
+q1.emplace(15);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+q1.pop();
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+int front = q1.front();
+int back = q1.back();
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+size_t current_size = q1.size();
+bool is_empty = q1.empty();
+```
+
+### 排序和反转
+
+队列不支持排序和反转。
+
+### 拼接操作
+
+队列不支持直接拼接，可以通过循环添加元素。
+
+```cpp
+std::queue<int> q3;
+q3.push(20);
+q3.push(25);
+while (!q3.empty()) {
+    q1.push(q3.front());
+    q3.pop();
+}
+```
+
+### 迭代器操作
+
+队列不支持迭代器，因此无法进行迭代器相关的操作。
+
+### 其他常用函数
+
+```cpp
+emplace(Args&&... args): 原位构造并添加元素
+q1.emplace(30);
+
+swap(queue& other): 交换两个队列
+q1.swap(q2);
+```
+
+### 主要特点：
+
+- 先进先出（FIFO）结构。
+- 不允许随机访问，只能访问队头和队尾元素。
+- 基于其他容器（默认是 `deque`）实现。
+
+## priority_queue: 优先队列
+
+维护一个元素有序的队列，默认为最大堆。
+
+### 使用场景
+
+- 需要维护一个动态的有序序列
+- 实现堆排序
+- 需要频繁获取最大/最小元素
+- `push(const T& value)`: 添加一个元素。
+
+  ```cpp
+  std::priority_queue<int> pq;
+  pq.push(30);
+  ```
+- `pop()`: 移除优先级最高的元素。
+
+  ```cpp
+  pq.pop();
+  ```
+- `top() const`: 访问优先级最高的元素。
+
+  ```cpp
+  int top = pq.top();
+  ```
+- `empty() const`: 检查优先队列是否为空。
+
+  ```cpp
+  if (pq.empty()) {
+      // 优先队列为空
+  }
+  ```
+- `size() const`: 返回优先队列中元素的个数。
+
+  ```cpp
+  size_t size = pq.size();
+  ```
+- `emplace(Args&&... args)`: 原位添加一个元素。
+
+  ```cpp
+  pq.emplace(40);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::priority_queue<int> pq1; // 默认构造
+std::priority_queue<int> pq2;
+pq2.push(1);
+pq2.push(2);
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+pq1.push(30);
+pq1.emplace(35);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+pq1.pop();
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+int top = pq1.top();
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+size_t current_size = pq1.size();
+bool is_empty = pq1.empty();
+```
+
+### 排序和反转
+
+优先队列自动根据优先级排序，不支持反转。
+
+### 拼接操作
+
+优先队列不支持直接拼接，可以通过循环添加元素。
+
+```cpp
+std::priority_queue<int> pq3;
+pq3.push(40);
+pq3.push(45);
+while (!pq3.empty()) {
+    pq1.push(pq3.top());
+    pq3.pop();
+}
+```
+
+### 迭代器操作
+
+优先队列不支持迭代器，因此无法进行迭代器相关的操作。
+
+### 其他常用函数
+
+```cpp
+emplace(Args&&... args): 原位构造并添加元素
+pq1.emplace(50);
+
+swap(priority_queue& other): 交换两优先队列
+pq1.swap(pq2);
+```
+
+### 主要特点：
+
+- 元素按优先级自动排序，默认是最大堆。
+- 只允许访问和修改最高优先级的元素。
+- 基于其他容器（默认是 `vector`）实现。
+
+# 性能对比
+
+## 时间复杂度
+
+
+| 容器类型      | 随机访问 | 插入/删除(开始) | 插入/删除(中间) | 插入/删除(结尾) | 查找    |
+| ------------- | -------- | --------------- | --------------- | --------------- | ------- |
+| vector        | O(1)     | O(n)            | O(n)            | O(1)            | O(n)    |
+| deque         | O(1)     | O(1)            | O(n)            | O(1)            | O(n)    |
+| list          | O(n)     | O(1)            | O(1)            | O(1)            | O(n)    |
+| set           | O(logn)  | O(logn)         | O(logn)         | O(logn)         | O(logn) |
+| map           | O(logn)  | O(logn)         | O(logn)         | O(logn)         | O(logn) |
+| unordered_set | N/A      | O(1)            | O(1)            | O(1)            | O(1)    |
+| unordered_map | N/A      | O(1)            | O(1)            | O(1)            | O(1)    |
+
+## 空间复杂度
+
+
+| 容器类型      | 额外空间 |
+| ------------- | -------- |
+| vector        | O(n)     |
+| deque         | O(n)     |
+| list          | O(n)     |
+| set           | O(n)     |
+| map           | O(n)     |
+| unordered_set | O(n)     |
+| unordered_map | O(n)     |
+
+# 最佳实践
+
+1. 默认优先使用 vector
+2. 需要在两端操作时使用 deque
+3. 频繁插入删除使用 list
+4. 需要有序唯一元素使用 set
+5. 需要键值对使用 map
+6. 追求查找效率使用 unordered_set/map
+7. 需要FIFO使用 queue
+8. 需要维护有序序列使用 priority_queue
+
+### 常见陷阱和注意事项
+
+1. vector
+   - 频繁在中间插入可能导致性能问题
+   - resize vs reserve 的区别
+   - 避免频繁的 push_back 导致重新分配
+
+2. deque
+   - 内存不连续，不能获取底层数组
+   - 迭代器失效条件比 vector 更严格
+
+3. list
+   - 双向链表额外内存开销大
+   - 不支持随机访问
+
+4. set/map
+   - 插入重复键的行为
+   - 迭代器是只读的
+
+5. unordered_set/map
+   - 哈希冲突对性能的影响
+   - 自定义类型需要提供哈希函数
+
+6. queue/priority_queue
+   - 容器适配器的限制
+   - 优先级定制
