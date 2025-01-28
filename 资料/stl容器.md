@@ -37,7 +37,7 @@
 
 基本特点:
 - 基于其他容器实现的接口
-- 包括：queue, priority_queue
+- 包括：queue, priority_queue, stack
 
 # 序列式容器
 
@@ -1345,6 +1345,133 @@ pq1.swap(pq2);
 - 只允许访问和修改最高优先级的元素。
 - 基于其他容器（默认是 `vector`）实现。
 
+## stack: 栈
+
+实现后进先出(LIFO)的数据结构。
+
+### 使用场景
+
+- 需要按照后进先出的顺序处理元素
+- 实现深度优先搜索
+- 处理括号匹配等问题
+- 实现函数调用栈
+- `push(const T& value)`: 添加一个元素到栈顶。
+
+  ```cpp
+  std::stack<int> s;
+  s.push(10);
+  ```
+- `pop()`: 移除栈顶元素。
+
+  ```cpp
+  s.pop();
+  ```
+- `top()`: 访问栈顶元素。
+
+  ```cpp
+  int top = s.top();
+  ```
+- `empty() const`: 检查栈是否为空。
+
+  ```cpp
+  if (s.empty()) {
+      // 栈为空
+  }
+  ```
+- `size() const`: 返回栈中元素的个数。
+
+  ```cpp
+  size_t size = s.size();
+  ```
+- `emplace(Args&&... args)`: 原位添加一个元素到栈顶。
+
+  ```cpp
+  s.emplace(20);
+  ```
+
+### 构造和初始化
+
+```cpp
+// 构造和初始化
+std::stack<int> s1; // 默认构造
+std::stack<int> s2;
+s2.push(1);
+s2.push(2);
+```
+
+### 添加元素
+
+```cpp
+// 添加元素
+s1.push(10);
+s1.emplace(15);
+```
+
+### 删除元素
+
+```cpp
+// 删除元素
+s1.pop();
+```
+
+### 访问元素
+
+```cpp
+// 访问元素
+int top = s1.top();
+```
+
+### 容量操作
+
+```cpp
+// 容量操作
+size_t current_size = s1.size();
+bool is_empty = s1.empty();
+```
+
+### 排序和反转
+
+栈不支持排序和反转操作。
+
+### 拼接操作
+
+栈不支持直接拼接，可以通过临时栈实现。
+
+```cpp
+std::stack<int> s3;
+s3.push(20);
+s3.push(25);
+std::stack<int> temp;
+while (!s3.empty()) {
+    temp.push(s3.top());
+    s3.pop();
+}
+while (!temp.empty()) {
+    s1.push(temp.top());
+    temp.pop();
+}
+```
+
+### 迭代器操作
+
+栈不支持迭代器，因此无法进行迭代器相关的操作。
+
+### 其他常用函数
+
+```cpp
+emplace(Args&&... args): 原位构造并添加元素
+s1.emplace(30);
+
+swap(stack& other): 交换两个栈
+s1.swap(s2);
+```
+
+### 主要特点：
+
+- 后进先出（LIFO）结构
+- 只允许访问栈顶元素
+- 基于其他容器（默认是 deque）实现
+
 # 性能对比
 
 ## 时间复杂度
@@ -1410,3 +1537,223 @@ pq1.swap(pq2);
 6. queue/priority_queue
    - 容器适配器的限制
    - 优先级定制
+
+# 查找操作详解
+
+## 顺序容器查找
+
+### vector/deque 的查找
+
+```cpp
+std::vector<int> vec = {1, 2, 3, 4, 5};
+
+// 1. 使用 find 算法（需要包含 <algorithm>）
+auto it = std::find(vec.begin(), vec.end(), 3);
+if (it != vec.end()) {
+    std::cout << "找到元素: " << *it << "\n";
+} else {
+    std::cout << "未找到元素\n";
+}
+
+// 2. 使用 find_if 查找满足条件的元素
+auto it2 = std::find_if(vec.begin(), vec.end(), [](int x) { 
+    return x > 3; 
+});
+if (it2 != vec.end()) {
+    std::cout << "找到第一个大于3的元素: " << *it2 << "\n";
+}
+
+// 3. 二分查找（要求容器已排序）
+if (std::binary_search(vec.begin(), vec.end(), 3)) {
+    std::cout << "元素3存在\n";
+}
+
+// 4. 获取位置
+auto idx = std::distance(vec.begin(), it);
+std::cout << "元素位置: " << idx << "\n";
+```
+
+### list 的查找
+
+```cpp
+std::list<int> lst = {1, 2, 3, 4, 5};
+
+// 由于list不支持随机访问，通常使用迭代器
+auto it = std::find(lst.begin(), lst.end(), 3);
+if (it != lst.end()) {
+    std::cout << "找到元素: " << *it << "\n";
+    // 前移/后移迭代器
+    ++it; // 下一个元素
+    --it; // 上一个元素
+}
+```
+
+## 关联容器查找
+
+### set 的查找
+
+```cpp
+std::set<int> s = {1, 2, 3, 4, 5};
+
+// 1. 使用 find 成员函数
+auto it = s.find(3);
+if (it != s.end()) {
+    std::cout << "找到元素: " << *it << "\n";
+}
+
+// 2. 使用 count 检查元素是否存在（set中要么是0要么是1）
+if (s.count(3) > 0) {
+    std::cout << "元素3存在\n";
+}
+
+// 3. 使用 lower_bound 和 upper_bound
+auto lower = s.lower_bound(3); // 大于等于3的第一个元素
+auto upper = s.upper_bound(3); // 大于3的第一个元素
+
+if (lower != s.end()) {
+    std::cout << "第一个大于等于3的元素: " << *lower << "\n";
+}
+
+// 4. 使用 equal_range 获取范围
+auto range = s.equal_range(3);
+for (auto it = range.first; it != range.second; ++it) {
+    std::cout << *it << " ";
+}
+```
+
+### map 的查找
+
+```cpp
+std::map<std::string, int> m = {
+    {"one", 1}, {"two", 2}, {"three", 3}
+};
+
+// 1. 使用 find 成员函数
+auto it = m.find("two");
+if (it != m.end()) {
+    std::cout << "找到键two对应的值: " << it->second << "\n";
+}
+
+// 2. 使用 count 检查键是否存在
+if (m.count("two") > 0) {
+    std::cout << "键two存在\n";
+}
+
+// 3. 使用 at 访问（不存在则抛出异常）
+try {
+    int value = m.at("two");
+    std::cout << "键two的值: " << value << "\n";
+} catch (const std::out_of_range& e) {
+    std::cout << "键不存在\n";
+}
+
+// 4. 使用 operator[] （不存在则插入默认值）
+int value = m["two"]; // 如果不存在，会插入并初始化为0
+
+// 5. 使用 lower_bound 和 upper_bound（基于键排序）
+auto lower = m.lower_bound("two");
+if (lower != m.end()) {
+    std::cout << "第一个大于等于two的键值对: " 
+              << lower->first << ":" << lower->second << "\n";
+}
+```
+
+## 无序容器查找
+
+### unordered_set 的查找
+
+```cpp
+std::unordered_set<int> us = {1, 2, 3, 4, 5};
+
+// 1. 使用 find 成员函数
+auto it = us.find(3);
+if (it != us.end()) {
+    std::cout << "找到元素: " << *it << "\n";
+}
+
+// 2. 使用 count 检查元素是否存在
+if (us.count(3) > 0) {
+    std::cout << "元素3存在\n";
+}
+
+// 注意：无序容器不支持 lower_bound/upper_bound
+```
+
+### unordered_map 的查找
+
+```cpp
+std::unordered_map<std::string, int> um = {
+    {"one", 1}, {"two", 2}, {"three", 3}
+};
+
+// 1. 使用 find 成员函数
+auto it = um.find("two");
+if (it != um.end()) {
+    std::cout << "找到键two对应的值: " << it->second << "\n";
+}
+
+// 2. 使用 count 检查键是否存在
+if (um.count("two") > 0) {
+    std::cout << "键two存在\n";
+}
+
+// 3. 安全的值访问模式
+auto it2 = um.find("two");
+if (it2 != um.end()) {
+    std::cout << "值: " << it2->second << "\n";
+} else {
+    std::cout << "键不存在\n";
+}
+
+// 4. 使用 at（不存在则抛出异常）
+try {
+    int value = um.at("two");
+} catch (const std::out_of_range& e) {
+    std::cout << "键不存在\n";
+}
+```
+
+## 容器适配器的查找
+
+注意：stack、queue 和 priority_queue 不支持直接查找，只能访问特定位置的元素（如栈顶、队首等）
+
+```cpp
+std::stack<int> s;
+s.push(1);
+s.push(2);
+s.push(3);
+
+// 只能访问栈顶元素
+if (!s.empty()) {
+    std::cout << "栈顶元素: " << s.top() << "\n";
+}
+
+std::queue<int> q;
+q.push(1);
+q.push(2);
+q.push(3);
+
+// 只能访问队首和队尾元素
+if (!q.empty()) {
+    std::cout << "队首元素: " << q.front() << "\n";
+    std::cout << "队尾元素: " << q.back() << "\n";
+}
+
+std::priority_queue<int> pq;
+pq.push(1);
+pq.push(3);
+pq.push(2);
+
+// 只能访问最高优先级的元素（默认最大值）
+if (!pq.empty()) {
+    std::cout << "最高优先级元素: " << pq.top() << "\n";
+}
+```
+
+## 查找最佳实践
+
+1. 对于有序序列，优先使用二分查找 (`binary_search`, `lower_bound`, `upper_bound`)
+2. 对于关联容器，优先使用成员函数 `find` 而不是算法 `std::find`
+3. 需要频繁查找时，考虑使用哈希容器 (`unordered_set/map`)
+4. 需要查找范围时，使用 `equal_range`
+5. 对于 map/unordered_map，优先使用 `find` 而不是 `operator[]` 检查键是否存在
