@@ -10,7 +10,9 @@
     - [list](#list-双向链表)
   - [关联式容器](#关联式容器)
     - [set](#set-有序集合)
+    - [multiset](#multiset-有序多重集合)
     - [map](#map-有序键值对)
+    - [multimap](#multimap-有序多重映射)
   - [无序关联式容器](#无序关联式容器)
     - [unordered_set](#unordered_set-哈希集合)
     - [unordered_map](#unordered_map-哈希表)
@@ -18,6 +20,8 @@
     - [queue](#queue-队列)
     - [priority_queue](#priority_queue-优先队列)
     - [stack](#stack-栈)
+  - [位集合](#位集合)
+    - [bitset](#bitset-固定大小位容器)
 - [性能对比](#性能对比)
 - [最佳实践](#最佳实践)
 - [查找操作详解](#查找操作详解)
@@ -156,17 +160,16 @@ for (auto it = vec1.begin(); it != vec1.end(); ++it) {
 ### 其他常用函数
 
 ```cpp
-resize(size_t count): 调整容器大小
+resize(size_t count): 调整容器大小。当 count 大于当前大小时，新元素按默认构造；若小于，则移除多余元素。
 vec1.resize(10);
 
-shrink_to_fit(): 请求容器收缩至当前大小
+shrink_to_fit(): 请求收缩内存至当前大小，多用于减少内存占用，但具体结果依赖编译器实现。
 vec1.shrink_to_fit();
 
-data(): 返回指向内部数组首元素的指针
+data(): 返回指向容器内部连续存储区首元素的指针，便于与 C 风格数组互操作。
 int* ptr = vec1.data();
 
-begin(), end(), rbegin(), rend() 等迭代器接口
-const 版本对应 cbegin(), cend(), crbegin(), crend()
+begin(), end(), rbegin(), rend() 等：提供正向或反向迭代器，用于遍历所有元素。
 ```
 
 ### 反向迭代器变体
@@ -332,13 +335,13 @@ for (auto it = deq1.begin(); it != deq1.end(); ++it) {
 ### 其他常用函数
 
 ```cpp
-resize(size_t count): 调整容器大小
+resize(size_t count): 同 vector，调整 deque 大小。
 deq1.resize(10);
 
-shrink_to_fit() (C++23 提供，部分编译器支持)
+shrink_to_fit(): 请求收缩未使用的内存（C++23起支持，部分编译器实现）。
 deq1.shrink_to_fit();
 
-data() (C++23 提供，部分编译器支持)
+data(): 返回指针指向内部数据（C++23起支持）。
 int* ptr = deq1.data();
 ```
 
@@ -502,13 +505,13 @@ for (auto it = lst1.begin(); it != lst1.end(); ++it) {
 ### 其他常用函数
 
 ```cpp
-merge(list& other): 合并另一个有序链表
+//merge(list& other): 合并另一个有序链表
 lst1.merge(lst2);
 
-unique(): 移除相邻重复元素
+//unique(): 移除相邻重复元素
 lst1.unique();
 
-emplace(iterator pos, Args&&... args): 在指定位置原位构造元素
+//emplace(iterator pos, Args&&... args): 在指定位置原位构造元素
 auto it = lst1.begin();
 lst1.emplace(it, 50);
 ```
@@ -651,13 +654,13 @@ for (auto it = s1.begin(); it != s1.end(); ++it) {
 ### 其他常用函数
 
 ```cpp
-lower_bound(const Key& key): 返回第一个不小于 key 的迭代器
+lower_bound(const Key& key): 返回指向第一个不小于 key 的元素迭代器，适合用于范围查找。
 auto lb = s1.lower_bound(2);
 
-upper_bound(const Key& key): 返回第一个大于 key 的迭代器
+upper_bound(const Key& key): 返回指向第一个大于 key 的元素迭代器，对区间结束判断有帮助。
 auto ub = s1.upper_bound(2);
 
-equal_range(const Key& key): 同时获取 lower_bound 和 upper_bound
+equal_range(const Key& key): 同时返回 lower_bound 与 upper_bound 的迭代器对，表示所有等于 key 的元素范围。
 auto range = s1.equal_range(2);
 ```
 
@@ -666,6 +669,17 @@ auto range = s1.equal_range(2);
 - 元素唯一且自动有序。
 - 基于红黑树实现，插入、删除、查找操作高效。
 - 不支持随机访问。
+
+#### multiset: 有序多重集合
+
+允许存储重复的元素，并按照升序自动排序。
+使用场景：需要记录重复值且希望元素自动排序时。
+
+```cpp
+std::multiset<int> ms;
+ms.insert(10);
+ms.insert(10); // 重复元素允许
+```
 
 #### map: 有序键值对
 
@@ -794,14 +808,28 @@ for (auto it = m1.begin(); it != m1.end(); ++it) {
 ### 其他常用函数
 
 ```cpp
-lower_bound(const Key& key): 返回第一个不小于 key 的迭代器
-auto lb = m1.lower_bound(2);
+lower_bound(const Key& key): 返回第一个键不小于 key 的迭代器，用于范围查询。
+auto lb = m1.lower_bound("two");
 
-upper_bound(const Key& key): 返回第一个大于 key 的迭代器
-auto ub = m1.upper_bound(2);
+upper_bound(const Key& key): 返回第一个大于 key 的迭代器。
+auto ub = m1.upper_bound("two");
 
-equal_range(const Key& key): 同时获取 lower_bound 和 upper_bound
-auto range = m1.equal_range(2);
+equal_range(const Key& key): 返回包含 key 的元素范围，由 lower_bound 与 upper_bound 组成。
+auto range = m1.equal_range("two");
+```
+
+### map 默认初始值设置
+
+对于 std::map，当使用 operator[] 访问不存在的键时，会调用对应值的默认构造函数。例如：
+```cpp
+std::map<std::string, int> mp;
+int value = mp["not_exist"]; // 自动插入键 "not_exist" 且 value 默认为 0
+```
+如果想设置其他默认值，可在判断后赋值：
+```cpp
+if (mp.find("key") == mp.end()) {
+    mp["key"] = 42;
+}
 ```
 
 ### 主要特点：
@@ -809,6 +837,17 @@ auto range = m1.equal_range(2);
 - 键值对，键唯一且自动有序。
 - 基于红黑树实现，插入、删除、查找操作高效。
 - 支持通过键直接访问或修改值。
+
+#### multimap: 有序多重映射
+
+允许相同键对应多个值，自动按键的升序排序。
+使用场景：需要建立一个键映射多个值时。
+
+```cpp
+std::multimap<int, std::string> mm;
+mm.insert({1, "one"});
+mm.insert({1, "uno"}); // 同一键的重复插入
+```
 
 ### 无序关联式容器
 
@@ -932,13 +971,13 @@ for (auto it = us1.begin(); it != us1.end(); ++it) {
 ### 其他常用函数
 
 ```cpp
-bucket_count(): 返回当前哈希桶数量
+bucket_count(): 返回当前底层哈希桶的数量，有助于了解哈希表内部结构。
 size_t n = us1.bucket_count();
 
-load_factor(): 返回当前负载因子
+load_factor(): 返回当前的负载因子，即元素数量与桶数的比值，可用于调优容器性能。
 float lf = us1.load_factor();
 
-rehash(size_t n): 重新配置哈希桶数量
+rehash(size_t n): 重新配置哈希桶数量，能改变负载因子，可能导致元素重排。
 us1.rehash(20);
 ```
 
@@ -1078,14 +1117,28 @@ for (auto it = um1.begin(); it != um1.end(); ++it) {
 ### 其他常用函数
 
 ```cpp
-bucket_count(): 返回当前哈希桶数量
+bucket_count(): 返回哈希桶数量。
 size_t bn = um1.bucket_count();
 
-load_factor(): 返回当前负载因子
+load_factor(): 当前负载因子，衡量桶的利用率。
 float lf = um1.load_factor();
 
-rehash(size_t n): 重新配置哈希桶数量
+rehash(size_t n): 根据指定的桶数重新安排哈希表，可能会重新分布所有元素。
 um1.rehash(20);
+```
+
+### unordered_map 默认初始值设置
+
+std::unordered_map 也具有相同特性，例如：
+```cpp
+std::unordered_map<std::string, std::string> um;
+std::string s = um["non_exist"]; // 自动插入，s 为 ""
+```
+自定义默认值设置：
+```cpp
+if (um.find("key") == um.end()) {
+    um["key"] = "default_value";
+}
 ```
 
 ### 主要特点：
@@ -1476,6 +1529,21 @@ s1.swap(s2);
 - 后进先出（LIFO）结构
 - 只允许访问栈顶元素
 - 基于其他容器（默认是 deque）实现
+
+## 位集合
+
+#### bitset: 固定大小位容器
+
+用于存储固定数量的二进制位，并支持高效的位操作。
+使用场景：需要按位处理或存储大量布尔标志时。
+
+```cpp
+std::bitset<8> bs; 
+bs.set(0);       // 将第 0 位置为 1
+bool bit0 = bs.test(0);  // 检查第 0 位是否为 1
+bs.reset(0);     // 将第 0 位重置为 0
+bs.flip();       // 所有位取反
+```
 
 ## 性能对比
 

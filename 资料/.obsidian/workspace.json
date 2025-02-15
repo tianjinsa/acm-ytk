@@ -40,7 +40,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -140,7 +141,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "stl容器.md"
+                "file": "stl容器.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-list",
               "title": "stl容器 的大纲"
@@ -167,7 +171,7 @@
       "remotely-save:Remotely Save": false
     }
   },
-  "active": "8b76d99cc292d2e5",
+  "active": "a910e9da41135ed8",
   "lastOpenFiles": [
     "未命名.canvas",
     "未命名 2.md",
