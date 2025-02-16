@@ -1828,3 +1828,19 @@ if (!pq.empty()) {
 3. 需要频繁查找时，考虑使用哈希容器 (`unordered_set/map`)
 4. 需要查找范围时，使用 `equal_range`
 5. 对于 map/unordered_map，优先使用 `find` 而不是 `operator[]` 检查键是否存在
+
+## 扩展阅读与总结
+
+- 推荐书籍：  
+  - 《Effective STL》  
+  - 《STL源码剖析》  
+  - 《C++标准库》
+
+- 在线资源：  
+  - [cppreference.com](https://en.cppreference.com)  
+  - [C++ 学习笔记](https://www.cplusplus.com)
+
+- 学习建议：  
+  - 在实际项目中尝试不同容器以平衡性能与空间；  
+  - 注意容器的迭代器失效规则与内存管理细节；  
+  - 关注 STL 算法使用案例，提升编码规范和效率。
