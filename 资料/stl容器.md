@@ -26,11 +26,12 @@
 - [最佳实践](#最佳实践)
 - [查找操作详解](#查找操作详解)
 
+
 ## 容器分类
 
 ### 序列式容器
 
-#### vector: 动态数组
+#### vector-动态数组
 
 动态数组是最常用的容器，它提供了快速的随机访问能力和高效的尾部操作。
 
@@ -187,7 +188,7 @@ begin(), end(), rbegin(), rend() 等：提供正向或反向迭代器，用于�
 - 支持快速随机访问。
 - 高效的尾部插入和删除操作。
 
-#### deque: 双端队列
+#### deque-双端队列
 
 双端队列支持在两端进行快速插入和删除操作，同时也允许随机访问。
 
@@ -303,8 +304,7 @@ int second = deq1.at(1);
 
 ```cpp
 // 容量操作
-deq1.reserve(100); // 预留空间（注意：deque 没有 reserve，示例仅供参考）
-size_t current_capacity = deq1.capacity(); // 此操作在 deque 中不可用
+// 注意：deque内部为分段连续存储，不支持reserve与capacity操作
 ```
 
 ### 排序和反转
@@ -356,7 +356,7 @@ int* ptr = deq1.data();
 - 自动管理内存，适合频繁在两端操作的场景。
 - 支持随机访问，但速度略低于 `vector`。
 
-#### list: 双向链表
+#### list-双向链表
 
 双向链表支持在任何位置进行常数时间的插入和删除操作。
 
@@ -534,7 +534,7 @@ lst1.emplace(it, 50);
 
 ### 关联式容器
 
-#### set: 有序集合
+#### set-有序集合
 
 有序集合自动将元素按升序排列，并保证元素的唯一性。
 
@@ -670,7 +670,7 @@ auto range = s1.equal_range(2);
 - 基于红黑树实现，插入、删除、查找操作高效。
 - 不支持随机访问。
 
-#### multiset: 有序多重集合
+#### multiset-有序多重集合
 
 允许存储重复的元素，并按照升序自动排序。
 使用场景：需要记录重复值且希望元素自动排序时。
@@ -681,7 +681,7 @@ ms.insert(10);
 ms.insert(10); // 重复元素允许
 ```
 
-#### map: 有序键值对
+#### map-有序键值对
 
 有序映射存储键值对，并按键的升序排列。
 
@@ -838,7 +838,7 @@ if (mp.find("key") == mp.end()) {
 - 基于红黑树实现，插入、删除、查找操作高效。
 - 支持通过键直接访问或修改值。
 
-#### multimap: 有序多重映射
+#### multimap-有序多重映射
 
 允许相同键对应多个值，自动按键的升序排序。
 使用场景：需要建立一个键映射多个值时。
@@ -851,7 +851,7 @@ mm.insert({1, "uno"}); // 同一键的重复插入
 
 ### 无序关联式容器
 
-#### unordered_set: 哈希集合
+#### unordered_set-哈希集合
 
 基于哈希表实现的集合，提供常数时间的元素访问。
 
@@ -987,7 +987,7 @@ us1.rehash(20);
 - 插入、删除、查找操作平均常数时间复杂度。
 - 不支持有序遍历。
 
-#### unordered_map: 哈希表
+#### unordered_map-哈希表
 
 基于哈希表实现的键值对容器，提供常数时间的元素访问。
 
@@ -1149,7 +1149,7 @@ if (um.find("key") == um.end()) {
 
 ### 容器适配器
 
-#### queue: 队列
+#### queue-队列
 
 实现先进先出(FIFO)的数据结构。
 
@@ -1278,7 +1278,7 @@ q1.swap(q2);
 - 不允许随机访问，只能访问队头和队尾元素。
 - 基于其他容器（默认是 `deque`）实现。
 
-#### priority_queue: 优先队列
+#### priority_queue-优先队列
 
 维护一个元素有序的队列，默认为最大堆。
 
@@ -1395,13 +1395,43 @@ swap(priority_queue& other): 交换两优先队列
 pq1.swap(pq2);
 ```
 
-### 主要特点：
+## 优先队列深入说明及用法
 
-- 元素按优先级自动排序，默认是最大堆。
-- 只允许访问和修改最高优先级的元素。
-- 基于其他容器（默认是 `vector`）实现。
+优先队列基于堆实现，默认是最大堆。可以通过自定义比较器实现最小堆或其他排序规则。
 
-#### stack: 栈
+例如，自定义比较器实现最小堆：
+```cpp
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <functional>
+
+int main() {
+    // 默认 priority_queue 为最大堆
+    std::priority_queue<int> maxHeap;
+    maxHeap.push(10);
+    maxHeap.push(5);
+    maxHeap.push(20);
+    
+    // 自定义比较器实现最小堆
+    std::priority_queue<int, std::vector<int>, std::greater<int>> minHeap;
+    minHeap.push(10);
+    minHeap.push(5);
+    minHeap.push(20);
+
+    std::cout << "最大堆顶元素: " << maxHeap.top() << std::endl;
+    std::cout << "最小堆顶元素: " << minHeap.top() << std::endl;
+    return 0;
+}
+```
+
+优先队列常用操作：
+- push/emplace: 添加元素
+- pop: 移除顶端元素
+- top: 访问顶端元素
+- empty/size: 检查容器状态
+
+#### stack-栈
 
 实现后进先出(LIFO)的数据结构。
 
@@ -1532,7 +1562,7 @@ s1.swap(s2);
 
 ## 位集合
 
-#### bitset: 固定大小位容器
+#### bitset-固定大小位容器
 
 用于存储固定数量的二进制位，并支持高效的位操作。
 使用场景：需要按位处理或存储大量布尔标志时。
@@ -1545,19 +1575,26 @@ bs.reset(0);     // 将第 0 位重置为 0
 bs.flip();       // 所有位取反
 ```
 
+### 示例：bitset默认索引从右到左（低位到高位）
+```cpp
+std::bitset<4> bs(0b1010); // 表示：第3位为1，第2位为0，第1位为1，第0位为0
+// 例如：测试最高位
+bool highest = bs.test(3); // 返回true
+```
+
 ## 性能对比
 
-增强表格排版如下：
+| 容器类型      | 随机访问 | 插入/删除(开始) | 插入/删除(中间)          | 插入/删除(结尾) | 查找     |
+| ------------- | :------: | :-----------: | :----------------------: | :-----------: | :------: |
+| vector        | O(1)     | O(n)          | O(n)*                   | O(1)          | O(n)     |
+| deque         | O(1)     | O(1)          | O(n)*                   | O(1)          | O(n)     |
+| list          | O(n)     | O(1)          | O(n) (遍历定位 + O(1))   | O(1)          | O(n)     |
+| set           | O(log n) | O(log n)      | O(log n)               | O(log n)      | O(log n) |
+| map           | O(log n) | O(log n)      | O(log n)               | O(log n)      | O(log n) |
+| unordered_set | N/A      | O(1)          | O(1)                   | O(1)          | O(1)     |
+| unordered_map | N/A      | O(1)          | O(1)                   | O(1)          | O(1)     |
 
-| 容器类型      | 随机访问 | 插入/删除(开始) | 插入/删除(中间) | 插入/删除(结尾) | 查找     |
-| ------------- | :------: | :-----------: | :-----------: | :-----------: | :------: |
-| vector        | O(1)     | O(n)          | O(n)          | O(1)          | O(n)     |
-| deque         | O(1)     | O(1)          | O(n)          | O(1)          | O(n)     |
-| list          | O(n)     | O(1)          | O(1)          | O(1)          | O(n)     |
-| set           | O(log n) | O(log n)      | O(log n)      | O(log n)      | O(log n) |
-| map           | O(log n) | O(log n)      | O(log n)      | O(log n)      | O(log n) |
-| unordered_set | N/A      | O(1)          | O(1)          | O(1)          | O(1)     |
-| unordered_map | N/A      | O(1)          | O(1)          | O(1)          | O(1)     |
+*注：中间插入/删除需要先遍历定位，list操作定位为O(n)
 
 ## 空间复杂度
 
@@ -1582,32 +1619,44 @@ bs.flip();       // 所有位取反
 7. 需要FIFO使用 queue
 8. 需要维护有序序列使用 priority_queue
 
-### 常见陷阱和注意事项
+> **补充说明**  
+> - 使用 emplace 系列函数可以避免构造临时对象，从而提高性能。  
+> - 对于可能抛出异常的操作（如 vector::at()、map::at()），建议使用 try-catch 捕获异常。
 
-1. vector
-   - 频繁在中间插入可能导致性能问题
-   - resize vs reserve 的区别
-   - 避免频繁的 push_back 导致重新分配
+## 容器适用场景对比
 
-2. deque
-   - 内存不连续，不能获取底层数组
-   - 迭代器失效条件比 vector 更严格
+| 容器类型       | 内存占用  | 查找效率   | 插入/删除效率     | 是否有序 | 允许重复元素 |
+| -------------- | --------- | ---------- | ----------------- | -------- | ------------ |
+| vector         | 较低      | O(n)       | 尾部 O(1)，中间 O(n) | 是       | 否           |
+| deque          | 较低      | O(n)       | 两端 O(1)，中间 O(n) | 是       | 否           |
+| list           | 较高      | O(n)       | O(1)              | 否       | 是           |
+| set            | 中等      | O(log n)   | O(log n)          | 是       | 否           |
+| multiset       | 中等      | O(log n)   | O(log n)          | 是       | 是           |
+| map            | 中等      | O(log n)   | O(log n)          | 是       | 键唯一       |
+| multimap       | 中等      | O(log n)   | O(log n)          | 是       | 键可重复     |
+| unordered_set  | 较低      | 平均 O(1)  | 平均 O(1)         | 否       | 否           |
+| unordered_map  | 较低      | 平均 O(1)  | 平均 O(1)         | 否       | 键唯一       |
 
-3. list
-   - 双向链表额外内存开销大
-   - 不支持随机访问
+## 迭代器失效说明
 
-4. set/map
-   - 插入重复键的行为
-   - 迭代器是只读的
+在 **vector** 和 **deque** 中，插入或删除元素可能导致迭代器失效：
+- 对 vector：插入或删除元素可能导致重新分配内存，从而使所有迭代器失效。建议使用返回值或重新获取迭代器。  
+- 对 deque：插入/删除头尾元素通常安全，但中间操作可能使部分迭代器失效。
 
-5. unordered_set/map
-   - 哈希冲突对性能的影响
-   - 自定义类型需要提供哈希函数
+示例：
+```cpp
+// 避免迭代器失效的示例
+auto it = vec.begin();
+it = vec.insert(it, 42); // 使用返回的迭代器继续操作
+```
 
-6. queue/priority_queue
-   - 容器适配器的限制
-   - 优先级定制
+## std::array 的说明
+
+虽然 std::array 大小固定，但适用于需要在栈上分配小型固定数组的场景，性能较高且安全：
+```cpp
+#include <array>
+std::array<int, 5> arr = {1, 2, 3, 4, 5};
+```
 
 ## 查找操作详解
 
@@ -1829,6 +1878,77 @@ if (!pq.empty()) {
 4. 需要查找范围时，使用 `equal_range`
 5. 对于 map/unordered_map，优先使用 `find` 而不是 `operator[]` 检查键是否存在
 
+## 扩展说明及用法
+
+### 1. STL各容器的选择建议
+- 对于需要动态扩展且随机访问要求高的场景，尽可能使用 vector。
+- 当两端插入删除频繁时，优先考虑 deque；而中间频繁插入删除建议使用 list。
+- 对于需要快速查询，且数据无须顺序时，可选择 unordered_set 或 unordered_map。
+
+### 2. 详细使用示例
+
+#### 示例：使用 vector 与算法配合
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main() {
+    vector<int> vec = {5, 3, 8, 1};
+    // 排序并查找第一个大于4的元素
+    sort(vec.begin(), vec.end());
+    auto it = find_if(vec.begin(), vec.end(), [](int n){ return n > 4; });
+    if(it != vec.end()){
+        cout << "第一个大于4的元素是: " << *it << endl;
+    }
+    return 0;
+}
+```
+
+#### 示例：利用 map 建立单词计数器
+```cpp
+#include <iostream>
+#include <map>
+#include <sstream>
+using namespace std;
+int main() {
+    string text = "hello world hello STL";
+    map<string, int> wordCount;
+    istringstream iss(text);
+    string word;
+    while(iss >> word) {
+        ++wordCount[word];
+    }
+    // 输出计数结果
+    for(const auto& p: wordCount) {
+        cout << p.first << ": " << p.second << endl;
+    }
+    return 0;
+}
+```
+
+#### 示例：利用 unordered_map 进行快速查找
+```cpp
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+int main() {
+    unordered_map<string, int> lookup = { {"apple", 10}, {"banana", 20} };
+    string key = "apple";
+    if(lookup.find(key) != lookup.end()){
+        cout << key << " 对应的值是: " << lookup[key] << endl;
+    } else {
+        cout << key << " 不存在于字典中" << endl;
+    }
+    return 0;
+}
+```
+
+### 3. 扩展用法说明
+- 为提高代码复用性，建议将常用操作封装为函数或类模板。
+- 利用 Lambda 表达式进行复杂条件查找，是 C++11 后的常用技巧。
+- STL 算法与容器的灵活组合，能够大幅简化代码且提高性能，应多加实践。
+
 ## 扩展阅读与总结
 
 - 推荐书籍：  
@@ -1844,3 +1964,25 @@ if (!pq.empty()) {
   - 在实际项目中尝试不同容器以平衡性能与空间；  
   - 注意容器的迭代器失效规则与内存管理细节；  
   - 关注 STL 算法使用案例，提升编码规范和效率。
+
+### 迭代器类别
+- **vector / deque**：随机访问迭代器（支持 +、-、[] 运算符）
+- **list / set / map**：双向迭代器（仅支持 ++ 和 --）
+- **forward_list**：前向迭代器（仅支持 ++）
+
+### 异常安全说明
+- 部分操作（如vector::at()）在访问越界时会抛出 std::out_of_range 异常，应使用try-catch进行异常捕获：
+  ```cpp
+  try {
+      int value = vec.at(10); // 可能抛出异常
+  } catch (const std::out_of_range& e) {
+      // 处理异常
+  }
+  ```
+
+### 注意：set和map的键为const，不允许通过迭代器进行修改，如下示例
+```cpp
+std::set<int> s = {1, 2, 3};
+auto it = s.begin();
+// *it = 4; // 错误！set的键不可修改
+```
