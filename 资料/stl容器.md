@@ -1,6 +1,6 @@
 # C++ STL容器使用指南
 
-> 本文档详细介绍了C++ STL容器的分类、使用方法、性能对比及最佳实践。
+> 本文档详细介绍了 C++ STL 容器的分类、使用方法、底层实现原理、性能对比及最佳实践。特别说明各容器在内存管理、迭代器失效和异常安全方面的细节，帮助读者更深入地理解和应用 STL 提供的各个容器。
 
 ## 目录
 - [容器分类](#容器分类)
@@ -27,68 +27,79 @@
 - [查找操作详解](#查找操作详解)
 
 
-## 容器分类
 
-### 序列式容器
+# 序列式容器
 
-#### vector-动态数组
+## vector-动态数组
 
-动态数组是最常用的容器，它提供了快速的随机访问能力和高效的尾部操作。
+动态数组（`vector`）是最常用的容器。它的内存是连续分配的，因此支持快速随机访问；但当容量不足时，会按照一定的扩展策略（通常是倍增扩容）进行内存重新分配，这可能导致所有迭代器失效。  
+详细说明：  
 
-> 小贴士：适用于需要快速随机访问和尾部操作的场景。
+- 内存扩容通常遵循几何级增长，确保插入元素的均摊时间复杂度为 O(1)。  
+- 迭代器和指针在重新分配时全部失效，需要注意使用返回的迭代器或重新获取索引。  
+
+> 小贴士：适用于需要快速随机访问和尾部操作的场景。例如，存储一组数据，并需要频繁访问其中的元素。
 
 ### 使用场景
 
-- 需要频繁随机访问元素
-- 主要在尾部进行插入和删除操作
-- 需要动态改变容器大小
+- 需要频繁随机访问元素：`vector` 提供了高效的随机访问能力，可以通过索引直接访问元素。
+- 主要在尾部进行插入和删除操作：在尾部插入和删除元素的时间复杂度为 O(1)，效率很高。
+- 需要动态改变容器大小：`vector` 可以根据需要动态调整大小，方便存储不确定数量的元素。
 - `push_back(const T& value)`: 在末尾添加一个元素。
 
   ```cpp
   std::vector<int> vec;
-  vec.push_back(10);
+  vec.push_back(10); // 在 vec 的末尾添加元素 10
   ```
+
 - `pop_back()`: 删除末尾的元素。
 
   ```cpp
-  vec.pop_back();
+  vec.pop_back(); // 删除 vec 的末尾元素
   ```
+
 - `size() const`: 返回容器中元素的个数。
 
   ```cpp
-  size_t size = vec.size();
+  size_t size = vec.size(); // 获取 vec 中元素的个数
   ```
+
 - `empty() const`: 检查容器是否为空。
 
   ```cpp
-  if (vec.empty()) {
+  if (vec.empty()) { // 检查 vec 是否为空
       // 容器为空
   }
   ```
+
 - `at(size_t pos)`: 访问指定位置的元素。
 
   ```cpp
-  int value = vec.at(0);
+  int value = vec.at(0); // 访问 vec 中索引为 0 的元素
   ```
+
 - `clear()`: 清空所有元素。
 
   ```cpp
-  vec.clear();
+  vec.clear(); // 清空 vec 中的所有元素
   ```
+
 - `insert(iterator pos, const T& value)`: 在指定位置插入元素。
 
   ```cpp
-  vec.insert(vec.begin(), 5);
+  vec.insert(vec.begin(), 5); // 在 vec 的起始位置插入元素 5
   ```
+
 - `erase(iterator pos)`: 删除指定位置的元素。
 
   ```cpp
-  vec.erase(vec.begin());
+  vec.erase(vec.begin()); // 删除 vec 的起始位置的元素
   ```
+
 - `emplace_back(Args&&... args)`: 在末尾原位构造一个元素。
 
   ```cpp
-  vec.emplace_back(20);
+  vec.emplace_back(20); // 在 vec 的末尾原位构造元素 20，避免了临时对象的创建
   ```
 
 ### 构造和初始化
@@ -174,10 +185,12 @@ begin(), end(), rbegin(), rend() 等：提供正向或反向迭代器，用于�
 ```
 
 ### 反向迭代器变体
+
 - `rbegin()`, `rend()`: 用于反向迭代
 - `crbegin()`, `crend()`: const 反向迭代器
 
 ### emplace系列变体
+
 - `emplace()`: 原位构造，C++17后支持
 - `emplace_back()`: 在尾部原位构造
 - `emplace_hint()`: 提供插入位置提示的原位构造
@@ -188,9 +201,14 @@ begin(), end(), rbegin(), rend() 等：提供正向或反向迭代器，用于�
 - 支持快速随机访问。
 - 高效的尾部插入和删除操作。
 
-#### deque-双端队列
+## deque-双端队列
 
-双端队列支持在两端进行快速插入和删除操作，同时也允许随机访问。
+双端队列采用分段连续内存存储，每段固定大小，这使得两端的插入及删除操作非常高效。  
+详细说明：  
+
+- deque 采用分段连续内存存储，支持在两端 O(1) 时间复杂度的插入和删除操作。
+- 分段存储使得 deque 可以在两端进行常数时间的操作，缺点是在中间插入时需要移动块指针，可能丢失部分迭代器。  
+- 与 vector 不同，deque 不支持 reserve 操作，原因在于其非连续内存结构。
 
 > 注意：deque 不支持 reserve 操作，请参照示例使用。
 
@@ -205,26 +223,31 @@ begin(), end(), rbegin(), rend() 等：提供正向或反向迭代器，用于�
   std::deque<int> deq;
   deq.push_front(5);
   ```
+
 - `push_back(const T& value)`: 在末尾添加一个元素。
 
   ```cpp
   deq.push_back(10);
   ```
+
 - `pop_front()`: 删除前端的元素。
 
   ```cpp
   deq.pop_front();
   ```
+
 - `pop_back()`: 删除末尾的元素。
 
   ```cpp
   deq.pop_back();
   ```
+
 - `size() const`: 返回容器中元素的个数。
 
   ```cpp
   size_t size = deq.size();
   ```
+
 - `empty() const`: 检查容器是否为空。
 
   ```cpp
@@ -232,31 +255,37 @@ begin(), end(), rbegin(), rend() 等：提供正向或反向迭代器，用于�
       // 容器为空
   }
   ```
+
 - `at(size_t pos)`: 访问指定位置的元素。
 
   ```cpp
   int value = deq.at(0);
   ```
+
 - `clear()`: 清空所有元素。
 
   ```cpp
   deq.clear();
   ```
+
 - `insert(iterator pos, const T& value)`: 在指定位置插入元素。
 
   ```cpp
   deq.insert(deq.begin(), 15);
   ```
+
 - `erase(iterator pos)`: 删除指定位置的元素。
 
   ```cpp
   deq.erase(deq.begin());
   ```
+
 - `emplace_front(Args&&... args)`: 在前端原位构造一个元素。
 
   ```cpp
   deq.emplace_front(20);
   ```
+
 - `emplace_back(Args&&... args)`: 在末尾原位构造一个元素。
 
   ```cpp
@@ -346,6 +375,7 @@ int* ptr = deq1.data();
 ```
 
 ### 注意：deque 特有的限制
+
 - `reserve()`: 不支持，因为deque内部结构是分段连续的
 - `capacity()`: 不支持，原因同上
 - `shrink_to_fit()`: 部分编译器支持，效果可能不明显
@@ -356,9 +386,13 @@ int* ptr = deq1.data();
 - 自动管理内存，适合频繁在两端操作的场景。
 - 支持随机访问，但速度略低于 `vector`。
 
-#### list-双向链表
+## list-双向链表
 
-双向链表支持在任何位置进行常数时间的插入和删除操作。
+双向链表采用节点连续的内存链接，每个节点储存前后指针，允许在任意位置 O(1) 插入或删除，但不支持索引访问。  
+详细说明：  
+
+- 由于节点分散存储，list 在迭代时的局部性不如 vector，但在频繁中间修改时非常高效。  
+- 即使插入或删除操作不会使其他迭代器失效，操作前仍需定位目标位置，时间复杂度为 O(n)。
 
 > 优点：高效的中间插入删除；缺点：不支持随机访问。
 
@@ -373,26 +407,31 @@ int* ptr = deq1.data();
   std::list<int> lst;
   lst.push_front(5);
   ```
+
 - `push_back(const T& value)`: 在末尾添加一个元素。
 
   ```cpp
   lst.push_back(10);
   ```
+  
 - `pop_front()`: 删除前端的元素。
 
   ```cpp
   lst.pop_front();
   ```
+
 - `pop_back()`: 删除末尾的元素。
 
   ```cpp
   lst.pop_back();
   ```
+
 - `size() const`: 返回容器中元素的个数。
 
   ```cpp
   size_t size = lst.size();
   ```
+
 - `empty() const`: 检查容器是否为空。
 
   ```cpp
@@ -400,32 +439,38 @@ int* ptr = deq1.data();
       // 容器为空
   }
   ```
+
 - `clear()`: 清空所有元素。
 
   ```cpp
   lst.clear();
   ```
+
 - `insert(iterator pos, const T& value)`: 在指定位置插入元素。
 
   ```cpp
   lst.insert(lst.begin(), 15);
   ```
+
 - `erase(iterator pos)`: 删除指定位置的元素。
 
   ```cpp
   lst.erase(lst.begin());
   ```
+
 - `splice(iterator pos, list& other)`: 将其他列表的元素移动到此列表。
 
   ```cpp
   std::list<int> other = {20, 25};
   lst.splice(lst.end(), other);
   ```
+
 - `emplace_front(Args&&... args)`: 在前端原位构造一个元素。
 
   ```cpp
   lst.emplace_front(30);
   ```
+
 - `emplace_back(Args&&... args)`: 在末尾原位构造一个元素。
 
   ```cpp
@@ -517,12 +562,14 @@ lst1.emplace(it, 50);
 ```
 
 ### list 特有的操作
+
 - `splice_after()`: 移动元素到指定位置之后
 - `merge()`: 合并两个已排序的链表
 - `reverse()`: 反转整个链表
 - `unique()`: 移除连续的重复元素
 
 ### list 的限制
+
 - 不支持随机访问操作符 ([])
 - 不支持算术运算的迭代器操作
 
@@ -534,9 +581,13 @@ lst1.emplace(it, 50);
 
 ### 关联式容器
 
-#### set-有序集合
+## set-有序集合
 
-有序集合自动将元素按升序排列，并保证元素的唯一性。
+有序集合基于平衡二叉树（通常为红黑树）实现，所有操作均具有 O(log n) 的时间复杂度。  
+详细说明：  
+
+- 元素在插入时自动排好序，内存占用相对较大。  
+- 迭代器稳定性较好，删除一个元素仅使该元素的迭代器失效。
 
 > 自动排序，适合存储唯一且有序的元素。
 
@@ -551,26 +602,31 @@ lst1.emplace(it, 50);
   std::set<int> s;
   s.insert(10);
   ```
+
 - `erase(const T& value)`: 删除指定元素。
 
   ```cpp
   s.erase(10);
   ```
+
 - `find(const T& value)`: 查找元素。
 
   ```cpp
   auto it = s.find(10);
   ```
+
 - `count(const T& value) const`: 计算元素出现次数。
 
   ```cpp
   size_t cnt = s.count(10);
   ```
+
 - `size() const`: 返回容器中元素的个数。
 
   ```cpp
   size_t size = s.size();
   ```
+
 - `empty() const`: 检查容器是否为空。
 
   ```cpp
@@ -578,11 +634,13 @@ lst1.emplace(it, 50);
       // 容器为空
   }
   ```
+
 - `clear()`: 清空所有元素。
 
   ```cpp
   s.clear();
   ```
+
 - `emplace(Args&&... args)`: 原位插入一个元素。
 
   ```cpp
@@ -670,7 +728,7 @@ auto range = s1.equal_range(2);
 - 基于红黑树实现，插入、删除、查找操作高效。
 - 不支持随机访问。
 
-#### multiset-有序多重集合
+### multiset-有序多重集合
 
 允许存储重复的元素，并按照升序自动排序。
 使用场景：需要记录重复值且希望元素自动排序时。
@@ -681,9 +739,13 @@ ms.insert(10);
 ms.insert(10); // 重复元素允许
 ```
 
-#### map-有序键值对
+## map-有序键值对
 
-有序映射存储键值对，并按键的升序排列。
+有序映射和 set 类似，底层也使用红黑树。  
+详细说明：  
+
+- 当使用 operator[] 进行元素访问时，如果键不存在，则会自动插入默认值，可能引起额外的内存分配和树重平衡。  
+- 提供 lower_bound、upper_bound 等接口，便于高效的范围查询。
 
 > 用于建立键值对应关系，并保持键的排序。
 
@@ -698,26 +760,31 @@ ms.insert(10); // 重复元素允许
   std::map<int, std::string> m;
   m.insert({1, "one"});
   ```
+
 - `erase(const Key& key)`: 删除指定键的元素。
 
   ```cpp
   m.erase(1);
   ```
+
 - `find(const Key& key)`: 查找键对应的元素。
 
   ```cpp
   auto it = m.find(1);
   ```
+
 - `count(const Key& key) const`: 计算键出现次数。
 
   ```cpp
   size_t cnt = m.count(1);
   ```
+
 - `size() const`: 返回容器中元素的个数。
 
   ```cpp
   size_t size = m.size();
   ```
+
 - `empty() const`: 检查容器是否为空。
 
   ```cpp
@@ -725,16 +792,19 @@ ms.insert(10); // 重复元素允许
       // 容器为空
   }
   ```
+
 - `clear()`: 清空所有元素。
 
   ```cpp
   m.clear();
   ```
+
 - `operator[](const Key& key)`: 访问或插入键对应的值。
 
   ```cpp
   m[2] = "two";
   ```
+
 - `emplace(Args&&... args)`: 原位插入一个键值对。
 
   ```cpp
@@ -821,11 +891,14 @@ auto range = m1.equal_range("two");
 ### map 默认初始值设置
 
 对于 std::map，当使用 operator[] 访问不存在的键时，会调用对应值的默认构造函数。例如：
+
 ```cpp
 std::map<std::string, int> mp;
 int value = mp["not_exist"]; // 自动插入键 "not_exist" 且 value 默认为 0
 ```
+
 如果想设置其他默认值，可在判断后赋值：
+
 ```cpp
 if (mp.find("key") == mp.end()) {
     mp["key"] = 42;
@@ -838,7 +911,7 @@ if (mp.find("key") == mp.end()) {
 - 基于红黑树实现，插入、删除、查找操作高效。
 - 支持通过键直接访问或修改值。
 
-#### multimap-有序多重映射
+### multimap-有序多重映射
 
 允许相同键对应多个值，自动按键的升序排序。
 使用场景：需要建立一个键映射多个值时。
@@ -849,11 +922,16 @@ mm.insert({1, "one"});
 mm.insert({1, "uno"}); // 同一键的重复插入
 ```
 
-### 无序关联式容器
+# 无序关联式容器
 
-#### unordered_set-哈希集合
+## unordered_set-哈希集合
 
-基于哈希表实现的集合，提供常数时间的元素访问。
+基于哈希表实现，所有查找、插入操作在平均情况下为 O(1)。  
+详细说明：  
+
+- 元素无序存储，内存占用相对较小。
+- 内部采用开放地址或链地址法解决冲突，不同实现对内存和性能的要求不同。  
+- 当负载因子过高时，rehash 操作会导致所有元素重新分布，迭代器也可能失效。
 
 > 优点：查找速度快，无须保持顺序。
 
@@ -868,26 +946,31 @@ mm.insert({1, "uno"}); // 同一键的重复插入
   std::unordered_set<int> us;
   us.insert(10);
   ```
+
 - `erase(const T& value)`: 删除指定元素。
 
   ```cpp
   us.erase(10);
   ```
+
 - `find(const T& value)`: 查找元素。
 
   ```cpp
   auto it = us.find(10);
   ```
+
 - `count(const T& value) const`: 计算元素出现次数。
 
   ```cpp
   size_t cnt = us.count(10);
   ```
+
 - `size() const`: 返回容器中元素的个数。
 
   ```cpp
   size_t size = us.size();
   ```
+
 - `empty() const`: 检查容器是否为空。
 
   ```cpp
@@ -895,11 +978,13 @@ mm.insert({1, "uno"}); // 同一键的重复插入
       // 容器为空
   }
   ```
+
 - `clear()`: 清空所有元素。
 
   ```cpp
   us.clear();
   ```
+
 - `emplace(Args&&... args)`: 原位插入一个元素。
 
   ```cpp
@@ -987,7 +1072,11 @@ us1.rehash(20);
 - 插入、删除、查找操作平均常数时间复杂度。
 - 不支持有序遍历。
 
-#### unordered_map-哈希表
+## unordered_map-哈希表
+
+详细说明与 unordered_set 类似，另外键值对的存储允许快速的键值映射。  
+
+- 注意在使用 operator[] 时，如果键不存在会创建新项，可能带来意外的内存分配。
 
 基于哈希表实现的键值对容器，提供常数时间的元素访问。
 
@@ -1003,27 +1092,36 @@ us1.rehash(20);
   ```cpp
   std::unordered_map<int, std::string> um;
   um.insert({1, "one"});
+  um.insert({2, "two"});
+  um.insert({3, "three"});
+  um.emplace(4, "four");
+  um[5] = "five";
   ```
+
 - `erase(const Key& key)`: 删除指定键的元素。
 
   ```cpp
   um.erase(1);
   ```
+
 - `find(const Key& key)`: 查找键对应的元素。
 
   ```cpp
   auto it = um.find(1);
   ```
+
 - `count(const Key& key) const`: 计算键出现次数。
 
   ```cpp
   size_t cnt = um.count(1);
   ```
+
 - `size() const`: 返回容器中元素的个数。
 
   ```cpp
   size_t size = um.size();
   ```
+
 - `empty() const`: 检查容器是否为空。
 
   ```cpp
@@ -1031,16 +1129,19 @@ us1.rehash(20);
       // 容器为空
   }
   ```
+
 - `clear()`: 清空所有元素。
 
   ```cpp
   um.clear();
   ```
+
 - `operator[](const Key& key)`: 访问或插入键对应的值。
 
   ```cpp
   um[2] = "two";
   ```
+
 - `emplace(Args&&... args)`: 原位插入一个键值对。
 
   ```cpp
@@ -1130,11 +1231,14 @@ um1.rehash(20);
 ### unordered_map 默认初始值设置
 
 std::unordered_map 也具有相同特性，例如：
+
 ```cpp
 std::unordered_map<std::string, std::string> um;
 std::string s = um["non_exist"]; // 自动插入，s 为 ""
 ```
+
 自定义默认值设置：
+
 ```cpp
 if (um.find("key") == um.end()) {
     um["key"] = "default_value";
@@ -1147,11 +1251,15 @@ if (um.find("key") == um.end()) {
 - 插入、删除、查找操作平均常数时间复杂度。
 - 支持通过键直接访问或修改值。
 
-### 容器适配器
+# 容器适配器
 
-#### queue-队列
+## queue-队列
 
-实现先进先出(FIFO)的数据结构。
+队列是一种 FIFO 数据结构，内部一般使用 deque 实现。  
+详细说明：  
+
+- 由于只允许访问队首和队尾，不支持迭代器，因此无法直接对队列内部数据做复杂操作。  
+- 在多线程环境中，队列必须进行额外的同步来保证数据的一致性。
 
 > 先进先出(FIFO)结构，常用于任务调度及广度优先搜索。
 
@@ -1166,21 +1274,25 @@ if (um.find("key") == um.end()) {
   std::queue<int> q;
   q.push(10);
   ```
+
 - `pop()`: 移除队列前端的元素。
 
   ```cpp
   q.pop();
   ```
+
 - `front()`: 访问队列前端的元素。
 
   ```cpp
   int front = q.front();
   ```
+  
 - `back()`: 访问队列末尾的元素。
 
   ```cpp
   int back = q.back();
   ```
+
 - `empty() const`: 检查队列是否为空。
 
   ```cpp
@@ -1188,11 +1300,13 @@ if (um.find("key") == um.end()) {
       // 队列为空
   }
   ```
+
 - `size() const`: 返回队列中元素的个数。
 
   ```cpp
   size_t size = q.size();
   ```
+
 - `emplace(Args&&... args)`: 原位添加一个元素到队列末尾。
 
   ```cpp
@@ -1278,9 +1392,13 @@ q1.swap(q2);
 - 不允许随机访问，只能访问队头和队尾元素。
 - 基于其他容器（默认是 `deque`）实现。
 
-#### priority_queue-优先队列
+## priority_queue-优先队列
 
-维护一个元素有序的队列，默认为最大堆。
+优先队列基于堆实现，默认是最大堆。  
+详细说明：  
+
+- 内部维护堆结构，使得每次获取 top 操作都是 O(1)，而插入和删除操作都是 O(log n)。  
+- 可通过自定义比较器改变排序规则，例如实现最小堆。
 
 > 默认实现最大堆，可根据需定制排序规则。
 
@@ -1295,16 +1413,19 @@ q1.swap(q2);
   std::priority_queue<int> pq;
   pq.push(30);
   ```
+
 - `pop()`: 移除优先级最高的元素。
 
   ```cpp
   pq.pop();
   ```
+
 - `top() const`: 访问优先级最高的元素。
 
   ```cpp
   int top = pq.top();
   ```
+
 - `empty() const`: 检查优先队列是否为空。
 
   ```cpp
@@ -1312,11 +1433,13 @@ q1.swap(q2);
       // 优先队列为空
   }
   ```
+
 - `size() const`: 返回优先队列中元素的个数。
 
   ```cpp
   size_t size = pq.size();
   ```
+
 - `emplace(Args&&... args)`: 原位添加一个元素。
 
   ```cpp
@@ -1395,11 +1518,12 @@ swap(priority_queue& other): 交换两优先队列
 pq1.swap(pq2);
 ```
 
-## 优先队列深入说明及用法
+### 优先队列深入说明及用法
 
 优先队列基于堆实现，默认是最大堆。可以通过自定义比较器实现最小堆或其他排序规则。
 
 例如，自定义比较器实现最小堆：
+
 ```cpp
 #include <iostream>
 #include <queue>
@@ -1426,14 +1550,19 @@ int main() {
 ```
 
 优先队列常用操作：
+
 - push/emplace: 添加元素
 - pop: 移除顶端元素
 - top: 访问顶端元素
 - empty/size: 检查容器状态
 
-#### stack-栈
+## stack-栈
 
-实现后进先出(LIFO)的数据结构。
+栈是一种 LIFO 数据结构，通常使用 deque 实现。  
+详细说明：  
+
+- 栈中的所有操作均为常数时间，但由于不支持迭代器，其调试和错误检查较为困难。  
+- 主要适用于递归调用、表达式求值等场景。
 
 > 后进先出(LIFO)结构，适合实现深度优先搜索或函数调用栈。
 
@@ -1449,16 +1578,19 @@ int main() {
   std::stack<int> s;
   s.push(10);
   ```
+
 - `pop()`: 移除栈顶元素。
 
   ```cpp
   s.pop();
   ```
+
 - `top()`: 访问栈顶元素。
 
   ```cpp
   int top = s.top();
   ```
+
 - `empty() const`: 检查栈是否为空。
 
   ```cpp
@@ -1466,11 +1598,13 @@ int main() {
       // 栈为空
   }
   ```
+
 - `size() const`: 返回栈中元素的个数。
 
   ```cpp
   size_t size = s.size();
   ```
+
 - `emplace(Args&&... args)`: 原位添加一个元素到栈顶。
 
   ```cpp
@@ -1560,9 +1694,15 @@ s1.swap(s2);
 - 只允许访问栈顶元素
 - 基于其他容器（默认是 deque）实现
 
-## 位集合
+# 位集合
 
-#### bitset-固定大小位容器
+## bitset-固定大小位容器
+
+用于存储固定数量的二进制位，支持高效位运算。  
+详细说明：  
+
+- 因为固定大小，bitset 的操作在编译期间就确定，性能和内存使用非常优化。  
+- 在处理大批量布尔值数据时，比 vector<bool> 更加高效且易于理解。
 
 用于存储固定数量的二进制位，并支持高效的位操作。
 使用场景：需要按位处理或存储大量布尔标志时。
@@ -1576,13 +1716,14 @@ bs.flip();       // 所有位取反
 ```
 
 ### 示例：bitset默认索引从右到左（低位到高位）
+
 ```cpp
 std::bitset<4> bs(0b1010); // 表示：第3位为1，第2位为0，第1位为1，第0位为0
 // 例如：测试最高位
 bool highest = bs.test(3); // 返回true
 ```
 
-## 性能对比
+# 性能对比
 
 | 容器类型      | 随机访问 | 插入/删除(开始) | 插入/删除(中间)          | 插入/删除(结尾) | 查找     |
 | ------------- | :------: | :-----------: | :----------------------: | :-----------: | :------: |
@@ -1620,6 +1761,7 @@ bool highest = bs.test(3); // 返回true
 8. 需要维护有序序列使用 priority_queue
 
 > **补充说明**  
+
 > - 使用 emplace 系列函数可以避免构造临时对象，从而提高性能。  
 > - 对于可能抛出异常的操作（如 vector::at()、map::at()），建议使用 try-catch 捕获异常。
 
@@ -1637,28 +1779,34 @@ bool highest = bs.test(3); // 返回true
 | unordered_set  | 较低      | 平均 O(1)  | 平均 O(1)         | 否       | 否           |
 | unordered_map  | 较低      | 平均 O(1)  | 平均 O(1)         | 否       | 键唯一       |
 
-## 迭代器失效说明
+# 迭代器失效说明
 
-在 **vector** 和 **deque** 中，插入或删除元素可能导致迭代器失效：
+在 **vector** 和 **deque** 中，插入或删除元素可能导致迭代器失效：  
+详细说明：  
+
 - 对 vector：插入或删除元素可能导致重新分配内存，从而使所有迭代器失效。建议使用返回值或重新获取迭代器。  
 - 对 deque：插入/删除头尾元素通常安全，但中间操作可能使部分迭代器失效。
 
 示例：
+
 ```cpp
 // 避免迭代器失效的示例
 auto it = vec.begin();
 it = vec.insert(it, 42); // 使用返回的迭代器继续操作
 ```
 
-## std::array 的说明
+# std::array 的说明
 
 虽然 std::array 大小固定，但适用于需要在栈上分配小型固定数组的场景，性能较高且安全：
+
 ```cpp
 #include <array>
 std::array<int, 5> arr = {1, 2, 3, 4, 5};
 ```
 
-## 查找操作详解
+# 查找操作详解
+
+详细查找操作部分增加对异常安全性、底层实现（例如哈希桶分布、红黑树平衡规则）的解释，帮助你更好地选择合适的查找算法和数据结构进行优化。
 
 ### 顺序容器查找
 
@@ -1870,7 +2018,7 @@ if (!pq.empty()) {
 }
 ```
 
-### 查找最佳实践
+## 查找最佳实践
 
 1. 对于有序序列，优先使用二分查找 (`binary_search`, `lower_bound`, `upper_bound`)
 2. 对于关联容器，优先使用成员函数 `find` 而不是算法 `std::find`
@@ -1878,9 +2026,10 @@ if (!pq.empty()) {
 4. 需要查找范围时，使用 `equal_range`
 5. 对于 map/unordered_map，优先使用 `find` 而不是 `operator[]` 检查键是否存在
 
-## 扩展说明及用法
+# 扩展说明及用法
 
 ### 1. STL各容器的选择建议
+
 - 对于需要动态扩展且随机访问要求高的场景，尽可能使用 vector。
 - 当两端插入删除频繁时，优先考虑 deque；而中间频繁插入删除建议使用 list。
 - 对于需要快速查询，且数据无须顺序时，可选择 unordered_set 或 unordered_map。
@@ -1888,6 +2037,7 @@ if (!pq.empty()) {
 ### 2. 详细使用示例
 
 #### 示例：使用 vector 与算法配合
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -1906,6 +2056,7 @@ int main() {
 ```
 
 #### 示例：利用 map 建立单词计数器
+
 ```cpp
 #include <iostream>
 #include <map>
@@ -1928,6 +2079,7 @@ int main() {
 ```
 
 #### 示例：利用 unordered_map 进行快速查找
+
 ```cpp
 #include <iostream>
 #include <unordered_map>
@@ -1945,11 +2097,12 @@ int main() {
 ```
 
 ### 3. 扩展用法说明
+
 - 为提高代码复用性，建议将常用操作封装为函数或类模板。
 - 利用 Lambda 表达式进行复杂条件查找，是 C++11 后的常用技巧。
 - STL 算法与容器的灵活组合，能够大幅简化代码且提高性能，应多加实践。
 
-## 扩展阅读与总结
+# 扩展阅读与总结
 
 - 推荐书籍：  
   - 《Effective STL》  
@@ -1966,12 +2119,15 @@ int main() {
   - 关注 STL 算法使用案例，提升编码规范和效率。
 
 ### 迭代器类别
+
 - **vector / deque**：随机访问迭代器（支持 +、-、[] 运算符）
 - **list / set / map**：双向迭代器（仅支持 ++ 和 --）
 - **forward_list**：前向迭代器（仅支持 ++）
 
 ### 异常安全说明
+
 - 部分操作（如vector::at()）在访问越界时会抛出 std::out_of_range 异常，应使用try-catch进行异常捕获：
+
   ```cpp
   try {
       int value = vec.at(10); // 可能抛出异常
@@ -1981,6 +2137,7 @@ int main() {
   ```
 
 ### 注意：set和map的键为const，不允许通过迭代器进行修改，如下示例
+
 ```cpp
 std::set<int> s = {1, 2, 3};
 auto it = s.begin();
