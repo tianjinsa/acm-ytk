@@ -2,12 +2,13 @@
 using namespace std;
 bool sss(string s){
     string tt="CHICKEN";
+    int t=0;
     for(char c:tt){
-        int t=s.find(c);
+        t=s.find(c,t);
         if(t==-1){
             return 0;
         }
-        s.erase(0,t+1);
+        t=t+1;
     }
     return 1;
 }
