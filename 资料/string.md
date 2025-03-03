@@ -1,337 +1,578 @@
-# C++ String 类函数及用法
+# C++ String 类完全指南
 
-C++标准库中的`string`类提供了丰富的字符串操作功能。以下是`string`类的主要函数及其用法。
+C++ 标准库中的 `string` 类是字符串操作的核心工具。本指南全面介绍其功能和用法，帮助你高效处理字符串。
 
 ## 基本操作
 
-### 构造函数
+### 构造与初始化
 
 ```cpp
-string s;                    // 创建空字符串
-string s("Hello");           // 用C风格字符串初始化
-string s(5, 'a');            // 创建字符串"aaaaa"
-string s(str, pos, len);     // 从另一个string的pos位置开始，复制len个字符
-string s(str.begin(), str.end()); // 使用迭代器范围初始化
+// 多种初始化方式
+string s1;                         // 空字符串
+string s2("Hello");                // C风格字符串初始化
+string s3 = "Hello";               // 赋值初始化
+string s4(5, 'a');                 // 创建字符串 "aaaaa"
+string s5(s2, 1, 3);               // 从s2的位置1开始的3个字符 ("ell")
+string s6(s2.begin() + 1, s2.end() - 1); // 使用迭代器 ("ell")
+
+// C++11 统一初始化
+string s7 = {"Hello"};
+string s8{"World"};
 ```
 
-### 赋值
+### 赋值操作
 
 ```cpp
 string s;
-s = "Hello";                 // 赋值C风格字符串
-s = another_string;          // 赋值另一个string对象
-s = 'A';                     // 赋值单个字符
-s.assign("Hello");           // 赋值函数
-s.assign(5, 'a');            // 赋值5个'a'
-s.assign(str, pos, len);     // 赋值str中从pos开始的len个字符
+s = "Hello";                  // C风格字符串赋值
+s = another_string;           // string对象赋值
+s = 'A';                      // 单个字符赋值
+
+// assign方法
+s.assign("Hello");            // 替换内容
+s.assign(5, 'a');             // 替换为5个'a'
+s.assign(str, 2, 3);          // 替换为str从位置2开始的3个字符
+s.assign(str.begin(), str.begin() + 3); // 使用迭代器范围赋值
 ```
 
 ### 访问元素
 
 ```cpp
-char c = s[0];               // 使用[]操作符访问（不进行边界检查）
-char c = s.at(0);            // 使用at()函数访问（进行边界检查）
-char& front = s.front();     // 访问第一个字符 (C++11)
-char& back = s.back();       // 访问最后一个字符 (C++11)
-const char* c_str = s.c_str(); // 获取C风格字符串
-```
+string str = "Hello";
+char c1 = str[0];             // 'H'，不检查边界
+char c2 = str.at(1);          // 'e'，会检查边界，越界时抛出out_of_range异常
 
-### 迭代器
+// C++11新增
+char& front = str.front();    // 引用首字符 'H'
+char& back = str.back();      // 引用尾字符 'o'
 
-```cpp
-auto it = s.begin();         // 指向第一个字符的迭代器
-auto it = s.end();           // 指向最后一个字符之后的迭代器
-auto it = s.rbegin();        // 指向最后一个字符的反向迭代器
-auto it = s.rend();          // 指向第一个字符之前的反向迭代器
+// C字符串转换
+const char* c_str = str.c_str();  // 以空字符结尾的C风格字符串
+const char* data = str.data();    // 获取内部数据指针(C++11前不保证空字符结尾)
+
+// C++17 数据视图
+string_view sv(str);          // 轻量级、非拥有的字符串视图
 ```
 
 ## 字符串操作
 
-### 添加和连接
+### 添加与连接
 
 ```cpp
-s += "World";                // 追加C风格字符串
-s += another_string;         // 追加另一个string对象
-s += 'a';                    // 追加单个字符
+string s = "Hello";
+s += " World";                // 追加C风格字符串，现在s为"Hello World"
+s += '!';                     // 追加字符，现在s为"Hello World!"
 
-s.append("World");           // 追加C风格字符串
-s.append(another_string);    // 追加另一个string对象
-s.append(5, 'a');            // 追加5个'a'
-s.append(str, pos, len);     // 追加str中从pos开始的len个字符
+// append方法
+s.append(" Welcome");         // 追加字符串
+s.append(3, '!');             // 追加3个感叹号
+s.append(another_str, 0, 5);  // 追加another_str的前5个字符
 
-s.push_back('a');            // 在末尾添加单个字符
+// 单字符添加
+s.push_back('.');             // 在末尾添加一个点，C++11
 
-s = s1 + s2;                 // 字符串连接
+// 字符串连接
+string s1 = "Hello";
+string s2 = "World";
+string s3 = s1 + " " + s2;    // "Hello World"
 ```
 
-### 插入
+### 插入操作
 
 ```cpp
-s.insert(pos, "text");       // 在pos位置插入C风格字符串
-s.insert(pos, str);          // 在pos位置插入string对象
-s.insert(pos, str, pos1, len); // 在pos位置插入str中从pos1开始的len个字符
-s.insert(pos, n, 'a');       // 在pos位置插入n个字符'a'
-s.insert(iterator, 'a');     // 在迭代器位置插入字符
-s.insert(iterator, n, 'a');  // 在迭代器位置插入n个字符'a'
+string s = "Hello";
+s.insert(5, " World");        // 在位置5插入字符串，结果"Hello World"
+s.insert(5, 3, '!');          // 在位置5插入3个'!'，结果"Hello!!! World"
+s.insert(0, another_str, 0, 3); // 在开头插入another_str的前3个字符
+
+// 使用迭代器插入
+auto it = s.begin() + 5;
+s.insert(it, 'X');            // 在位置5插入字符'X'
+s.insert(it, 3, 'Y');         // 在位置5插入3个'Y'
 ```
 
-### 删除
+### 删除操作
 
 ```cpp
-s.erase(pos, len);           // 从pos位置开始删除len个字符
-s.erase(iterator);           // 删除迭代器指向的字符
-s.erase(iterator1, iterator2); // 删除[iterator1, iterator2)范围的字符
-s.pop_back();                // 删除最后一个字符 (C++11)
-s.clear();                   // 清空字符串
+string s = "Hello World";
+s.erase(5, 1);                // 删除位置5的一个字符(空格)，结果"HelloWorld"
+
+// 使用迭代器删除
+auto it = s.begin() + 5;
+s.erase(it);                  // 删除迭代器指向的字符
+s.erase(s.begin(), s.begin() + 5); // 删除范围，结果为"World"
+
+// C++11 
+s.pop_back();                 // 删除最后一个字符
+s.clear();                    // 清空整个字符串
 ```
 
-### 替换
+### 替换操作
 
 ```cpp
-s.replace(pos, len, "new");  // 用"new"替换从pos开始的len个字符
-s.replace(pos, len, str);    // 用str替换从pos开始的len个字符
-s.replace(pos, len, str, pos1, len1); // 用str中从pos1开始的len1个字符替换从pos开始的len个字符
-s.replace(pos, len, n, 'a'); // 用n个'a'替换从pos开始的len个字符
-s.replace(it1, it2, "new");  // 用"new"替换[it1, it2)范围的字符
+string s = "Hello World";
+s.replace(0, 5, "Hi");        // 用"Hi"替换前5个字符，结果"Hi World"
+s.replace(3, 0, "Beautiful "); // 在位置3插入字符串，结果"Hi Beautiful World"
+s.replace(s.begin(), s.begin() + 2, "Hey"); // 使用迭代器替换，结果"Hey Beautiful World"
 ```
 
-### 子串
+### 子串提取
 
 ```cpp
-string sub = s.substr(pos, len); // 从pos开始，提取len个字符的子串
+string s = "Hello World";
+string sub = s.substr(0, 5);  // "Hello"，从位置0开始的5个字符
+string sub2 = s.substr(6);    // "World"，从位置6到结尾
 ```
 
-### 交换
+## 字符串信息与搜索
+
+### 大小与容量
 
 ```cpp
-s1.swap(s2);                 // 交换s1和s2的内容
-swap(s1, s2);                // 使用全局swap函数
-```
+string s = "Hello World";
+size_t len = s.length();      // 11，字符串长度
+size_t size = s.size();       // 11，同length()
+bool empty = s.empty();       // false，检查是否为空
 
-## 字符串信息
-
-### 大小和容量
-
-```cpp
-size_t len = s.size();       // 获取字符串长度
-size_t len = s.length();     // 同size()
-bool empty = s.empty();      // 检查字符串是否为空
-size_t cap = s.capacity();   // 获取当前分配的内存容量
-s.resize(n);                 // 调整字符串大小为n
-s.resize(n, 'a');            // 调整字符串大小为n，新增部分用'a'填充
-s.reserve(n);                // 预留n个字符的内存空间
-s.shrink_to_fit();           // 减少容量以适应实际大小 (C++11)
-size_t max = s.max_size();   // 获取string可能的最大长度
+// 容量管理
+size_t cap = s.capacity();    // 获取当前容量（可能大于size）
+s.reserve(100);               // 预留至少100个字符的空间
+s.shrink_to_fit();            // 释放多余容量，C++11
+s.resize(5);                  // 调整大小为5，结果"Hello"
+s.resize(10, '*');            // 调整大小为10，不足部分用*填充，结果"Hello*****"
 ```
 
 ### 查找与搜索
 
 ```cpp
-// 查找字符或子串，返回位置或string::npos（如果未找到）
-size_t pos = s.find("text");       // 查找子串第一次出现的位置
-size_t pos = s.find("text", pos);  // 从pos开始查找
-size_t pos = s.find('a');          // 查找字符
-size_t pos = s.find('a', pos);     // 从pos开始查找字符
+string s = "Hello World, Hello C++";
 
-// 逆向查找，从字符串末尾开始搜索
-size_t pos = s.rfind("text");
-size_t pos = s.rfind("text", pos);
-size_t pos = s.rfind('a');
-size_t pos = s.rfind('a', pos);
+// 正向查找
+size_t pos1 = s.find("Hello");       // 0，第一次出现的位置
+size_t pos2 = s.find("Hello", 1);    // 13，从位置1开始查找
+size_t pos3 = s.find('W');           // 6，查找字符
+size_t pos4 = s.find_first_of("aeiou"); // 1，第一个元音字母的位置('e')
 
-// 查找字符集合中的任一字符第一次出现位置
-size_t pos = s.find_first_of("aeiou");      // 查找任一元音字母
-size_t pos = s.find_first_of("aeiou", pos); // 从pos开始查找
+// 反向查找
+size_t rpos1 = s.rfind("Hello");     // 13，最后一次出现的位置
+size_t rpos2 = s.find_last_of("aeiou"); // 19，最后一个元音字母的位置('e')
 
-// 查找不在字符集合中的任一字符第一次出现位置
-size_t pos = s.find_first_not_of("aeiou");
-size_t pos = s.find_first_not_of("aeiou", pos);
+// 查找不在集合中的字符
+size_t pos5 = s.find_first_not_of("Helo "); // 6，第一个不是"Helo "中字符的位置('W')
+size_t pos6 = s.find_last_not_of("+ "); // 19，最后一个不是"+ "中字符的位置('e')
 
-// 查找字符集合中的任一字符最后一次出现位置
-size_t pos = s.find_last_of("aeiou");
-size_t pos = s.find_last_of("aeiou", pos);
-
-// 查找不在字符集合中的任一字符最后一次出现位置
-size_t pos = s.find_last_not_of("aeiou");
-size_t pos = s.find_last_not_of("aeiou", pos);
-```
-
-### 比较
-
-```cpp
-int result = s.compare("text");       // 与C风格字符串比较
-int result = s.compare(str);          // 与另一个string对象比较
-int result = s.compare(pos, len, "text"); // 比较s中从pos开始的len个字符与"text"
-int result = s.compare(pos, len, str, pos1, len1); // 比较各自的子串
-
-// 比较结果
-// 0: 相等
-// <0: s小于比较对象
-// >0: s大于比较对象
-
-// 操作符比较
-bool equal = (s1 == s2);
-bool not_equal = (s1 != s2);
-bool less = (s1 < s2);
-bool less_equal = (s1 <= s2);
-bool greater = (s1 > s2);
-bool greater_equal = (s1 >= s2);
-```
-
-## 数值转换 (C++11)
-
-### 字符串转数值
-
-```cpp
-int i = stoi(s);
-long l = stol(s);
-long long ll = stoll(s);
-unsigned long ul = stoul(s);
-unsigned long long ull = stoull(s);
-float f = stof(s);
-double d = stod(s);
-long double ld = stold(s);
-```
-
-### 数值转字符串
-
-```cpp
-string s = to_string(42);    // 整数转字符串
-string s = to_string(3.14);  // 浮点数转字符串
-```
-
-## 实用技巧
-
-### 遍历字符串
-
-```cpp
-// 使用索引
-for (size_t i = 0; i < s.length(); i++) {
-    cout << s[i];
-}
-
-// 使用迭代器
-for (auto it = s.begin(); it != s.end(); ++it) {
-    cout << *it;
-}
-
-// 使用范围for循环 (C++11)
-for (char c : s) {
-    cout << c;
+// 检查是否找到
+if (s.find("Java") == string::npos) {
+    cout << "未找到Java" << endl;
 }
 ```
 
-### 分割字符串
+### 比较操作
 
 ```cpp
-// 分割字符串（自定义函数示例）
-vector<string> split(const string& s, char delimiter) {
-    vector<string> tokens;
-    string token;
-    istringstream tokenStream(s);
-    while (getline(tokenStream, token, delimiter)) {
-        tokens.push_back(token);
-    }
-    return tokens;
+string s1 = "Apple";
+string s2 = "Banana";
+
+// 比较方法
+int comp1 = s1.compare(s2);           // 负值，s1 < s2
+int comp2 = s1.compare(0, 1, "A");    // 0，s1的第一个字符等于"A"
+int comp3 = s1.compare(0, 3, s2, 0, 3); // 比较部分子串
+
+// 比较运算符
+bool b1 = (s1 == s2);  // false
+bool b2 = (s1 != s2);  // true
+bool b3 = (s1 < s2);   // true，按字典序比较
+bool b4 = (s1 > s2);   // false
+
+// C++20 前缀后缀检查
+// bool b5 = s1.starts_with("App");  // true，C++20
+// bool b6 = s1.ends_with("le");     // true，C++20
+
+// C++20之前的前缀后缀检查实现
+bool starts_with(const string& str, const string& prefix) {
+    return str.size() >= prefix.size() && 
+           str.compare(0, prefix.size(), prefix) == 0;
+}
+
+bool ends_with(const string& str, const string& suffix) {
+    return str.size() >= suffix.size() && 
+           str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }
 ```
 
-### 字符串流
+## 高级功能
+
+### 字符串与数值转换 (C++11)
+
+```cpp
+// 【字符串转数值】- ACM比赛常用功能
+string num_str = "123.456";
+
+// 整数转换 - 掌握这三个基本够用
+int i = stoi("42");              // 字符串转int: 42
+long l = stol("1234567890");     // 字符串转long
+long long ll = stoll("1234567890123456789"); // 字符串转long long (ACM中常用)
+
+// 浮点数转换 - 记住这两个最常用
+double d = stod("2.71828");      // 字符串转double (ACM中常用)
+float f = stof("3.14");          // 字符串转float
+
+// 其他整数转换函数
+unsigned long ul = stoul("12345");
+unsigned long long ull = stoull("12345678901234567890");
+
+// 进制转换 - ACM比赛非常实用
+// 第二个参数是指针，用于存储成功解析的字符数量
+// 第三个参数是进制，默认为10
+size_t pos = 0;
+int hex_value = stoi("0xFF", &pos, 16);  // 十六进制转换: 255, pos = 4
+int bin_value = stoi("101010", nullptr, 2);  // 二进制转换: 42
+int oct_value = stoi("052", nullptr, 8);  // 八进制转换: 42
+
+// 错误处理 - 别忘了这点！
+try {
+    int invalid = stoi("not_a_number");  // 会抛出std::invalid_argument异常
+    int overflow = stoi("999999999999");  // 太大的数会抛出std::out_of_range异常
+} catch (const invalid_argument& e) {
+    cout << "无效输入: " << e.what() << endl;
+} catch (const out_of_range& e) {
+    cout << "数值超出范围: " << e.what() << endl;
+}
+
+// 【数值转字符串】- 简单好记
+string s1 = to_string(42);       // 整数转字符串: "42"
+string s2 = to_string(3.14159);  // 浮点数转字符串: "3.14159"
+
+// 【ACM比赛技巧】: 当需要控制输出格式时，使用stringstream比to_string更灵活
+#include <iomanip>
+#include <sstream>
+ostringstream oss;
+oss << fixed << setprecision(3) << 3.14159;  // 控制小数点后位数
+string formatted = oss.str();    // "3.142"
+
+// 输出特定进制
+ostringstream hex_oss;
+hex_oss << hex << uppercase << 255;  // 十六进制大写
+string hex_str = hex_oss.str();      // "FF"
+
+ostringstream bin_oss;
+bin_oss << bitset<8>(42);            // 二进制，8位
+string bin_str = bin_oss.str();      // "00101010"
+```
+
+**ACM比赛提示：**
+1. `stoi`, `stod` 和 `to_string` 是最常用的转换函数，重点掌握
+2. 处理大整数时，记得使用 `stoll` 而不是 `stoi`
+3. 字符串数值转换错误会抛出异常，在稳定性要求高的场景需要处理
+4. 自定义格式化数值时，使用 `stringstream` 比 `to_string` 更灵活
+5. 进制转换功能在位运算和编码题中非常有用
+```
+
+### 字符串流操作
 
 ```cpp
 #include <sstream>
 
-string s = "42 3.14 Hello";
-istringstream iss(s);
-int i;
-double d;
-string word;
-iss >> i >> d >> word;  // i=42, d=3.14, word="Hello"
+// 字符串解析
+string data = "123 3.14 Hello";
+istringstream iss(data);
+int i; double d; string s;
+iss >> i >> d >> s;  // i=123, d=3.14, s="Hello"
 
+// 字符串构建
 ostringstream oss;
-oss << "Value: " << 42 << " " << 3.14;
-string result = oss.str();  // result="Value: 42 3.14"
+oss << "Value: " << 42 << ", Pi: " << 3.14;
+string result = oss.str();  // "Value: 42, Pi: 3.14"
+
+// 数值格式化
+ostringstream oss2;
+oss2 << fixed << setprecision(2) << 3.14159;  // 需要 #include <iomanip>
+string formatted = oss2.str();  // "3.14"
 ```
 
-### 大小写转换
+### 内存管理与性能优化
 
 ```cpp
-// 需要包含 <algorithm>
-string s = "Hello World";
-transform(s.begin(), s.end(), s.begin(), ::toupper);  // 转为大写
-transform(s.begin(), s.end(), s.begin(), ::tolower);  // 转为小写
+// 预分配内存避免频繁重新分配
+string result;
+result.reserve(1000);  // 预留1000个字符的空间
+for (int i = 0; i < 100; i++) {
+    result += "Some text ";  // 不会导致频繁重新分配内存
+}
+
+// 移除多余容量
+result.shrink_to_fit();  // C++11
+
+// 使用 swap 技巧释放内存
+{
+    string(result).swap(result);  // C++11前清空并最小化容量的技巧
+    // C++11后可以直接用：result.clear(); result.shrink_to_fit();
+}
+
+// 移动语义(C++11)，避免不必要的拷贝
+string build_message() {
+    string msg = "Hello " + user_name + "!";
+    return msg;  // 编译器可能使用移动而非拷贝
+}
+
+string message = std::move(build_message());  // 显式移动
 ```
 
-## 实际应用示例
+## 实用案例
 
-### 1. 字符串拼接
+### 案例1: 分割字符串
 
 ```cpp
-string firstName = "John";
-string lastName = "Doe";
-string fullName = firstName + " " + lastName;  // "John Doe"
+// 按分隔符分割字符串
+vector<string> split(const string& s, char delimiter) {
+    vector<string> tokens;
+    istringstream tokenStream(s);
+    string token;
+    
+    while (getline(tokenStream, token, delimiter)) {
+        if (!token.empty()) {  // 忽略空标记（如连续分隔符）
+            tokens.push_back(token);
+        }
+    }
+    
+    return tokens;
+}
+
+// 使用示例
+string csv = "apple,banana,cherry,date";
+vector<string> fruits = split(csv, ',');
+// fruits包含: "apple", "banana", "cherry", "date"
 ```
 
-### 2. 子串提取
+### 案例2: 字符串替换
 
 ```cpp
-string email = "user@example.com";
-size_t atPos = email.find('@');
-string username = email.substr(0, atPos);  // "user"
-string domain = email.substr(atPos + 1);   // "example.com"
-```
+// 替换字符串中的所有匹配项
+string replace_all(string str, const string& from, const string& to) {
+    size_t pos = 0;
+    while ((pos = str.find(from, pos)) != string::npos) {
+        str.replace(pos, from.length(), to);
+        pos += to.length();  // 跳过刚刚插入的内容
+    }
+    return str;
+}
 
-### 3. 字符串替换
-
-```cpp
+// 使用示例
 string text = "Hello [name], welcome to [city]!";
-size_t pos = 0;
-while ((pos = text.find("[name]", pos)) != string::npos) {
-    text.replace(pos, 6, "John");
-    pos += 4;  // 替换后字符串长度的调整
-}
-pos = 0;
-while ((pos = text.find("[city]", pos)) != string::npos) {
-    text.replace(pos, 6, "New York");
-    pos += 8;
-}
-// 结果: "Hello John, welcome to New York!"
+text = replace_all(text, "[name]", "Alice");
+text = replace_all(text, "[city]", "Wonderland");
+// 结果: "Hello Alice, welcome to Wonderland!"
 ```
 
-### 4. 检查前缀和后缀
+### 案例3: URL编码/解码
 
 ```cpp
-bool hasPrefix(const string& str, const string& prefix) {
-    return str.substr(0, prefix.size()) == prefix;
+// URL编码
+string url_encode(const string &value) {
+    ostringstream escaped;
+    escaped.fill('0');
+    escaped << hex;
+
+    for (char c : value) {
+        // 保留字母数字和一些特殊字符
+        if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+            escaped << c;
+        } else {
+            // 其他字符编码为%XX形式
+            escaped << uppercase;
+            escaped << '%' << setw(2) << int((unsigned char)c);
+            escaped << nouppercase;
+        }
+    }
+
+    return escaped.str();
 }
 
-bool hasSuffix(const string& str, const string& suffix) {
-    if (str.length() < suffix.length()) return false;
-    return str.substr(str.length() - suffix.length()) == suffix;
+// URL解码
+string url_decode(const string &encoded) {
+    string result;
+    for (size_t i = 0; i < encoded.length(); ++i) {
+        if (encoded[i] == '%') {
+            if (i + 2 < encoded.length()) {
+                int value;
+                istringstream is(encoded.substr(i + 1, 2));
+                if (is >> hex >> value) {
+                    result += static_cast<char>(value);
+                    i += 2;
+                } else {
+                    result += '%';
+                }
+            } else {
+                result += '%';
+            }
+        } else if (encoded[i] == '+') {
+            result += ' ';
+        } else {
+            result += encoded[i];
+        }
+    }
+    return result;
 }
-
-// C++20提供了starts_with和ends_with方法
-// str.starts_with(prefix);
-// str.ends_with(suffix);
 ```
 
-### 5. 去除首尾空白
+### 案例4: 文本修剪(Trim)
 
 ```cpp
+// 去除字符串首尾的空白字符
 string trim(const string& str) {
-    size_t first = str.find_first_not_of(" \t\n\r\f\v");
-    if (first == string::npos) return "";
-    size_t last = str.find_last_not_of(" \t\n\r\f\v");
-    return str.substr(first, (last - first + 1));
+    // 找到第一个非空白字符
+    const string whitespace = " \t\n\r\f\v";
+    size_t start = str.find_first_not_of(whitespace);
+    
+    // 如果字符串全是空白字符
+    if (start == string::npos) 
+        return "";
+        
+    // 找到最后一个非空白字符
+    size_t end = str.find_last_not_of(whitespace);
+    
+    // 提取并返回子串
+    return str.substr(start, end - start + 1);
+}
+
+// 去除字符串左侧空白
+string ltrim(const string& str) {
+    const string whitespace = " \t\n\r\f\v";
+    size_t start = str.find_first_not_of(whitespace);
+    return (start == string::npos) ? "" : str.substr(start);
+}
+
+// 去除字符串右侧空白
+string rtrim(const string& str) {
+    const string whitespace = " \t\n\r\f\v";
+    size_t end = str.find_last_not_of(whitespace);
+    return (end == string::npos) ? "" : str.substr(0, end + 1);
 }
 ```
 
-## 注意事项
+### 案例5: 大小写转换
 
-1. `string`类提供边界检查和不提供边界检查的方法（如`at()`和`[]`）。
-2. 在频繁追加操作时，应预先使用`reserve()`分配足够的内存空间以提升性能。
-3. 字符串搜索函数如果没找到目标，会返回`string::npos`。
-4. C++11引入了移动语义，可以显著提高string操作的性能。
-5. 使用`c_str()`可以获取C风格字符串，但需注意该指针的生命周期。
+```cpp
+// 将字符串转换为大写
+string to_upper(string str) {
+    transform(str.begin(), str.end(), str.begin(), 
+               [](unsigned char c){ return toupper(c); });
+    return str;
+}
 
-这些是C++ string类的主要功能和用法，熟练掌握这些操作可以有效地处理各种字符串相关问题。
+// 将字符串转换为小写
+string to_lower(string str) {
+    transform(str.begin(), str.end(), str.begin(), 
+               [](unsigned char c){ return tolower(c); });
+    return str;
+}
+
+// 将字符串首字母大写
+string capitalize(string str) {
+    if (!str.empty()) {
+        str[0] = toupper(str[0]);
+    }
+    return str;
+}
+```
+
+## 常见错误与最佳实践
+
+### 潜在问题
+
+1. **越界访问** - 使用 `[]` 不进行边界检查，可能导致未定义行为
+   ```cpp
+   string s = "Hi";
+   char c = s[10];  // 未定义行为! 应使用 s.at(10) 触发异常
+   ```
+
+2. **迭代器失效** - 修改字符串可能导致迭代器失效
+   ```cpp
+   string s = "Hello";
+   auto it = s.begin() + 2;
+   s += " World";   // 可能导致it失效
+   *it = 'X';       // 危险操作，可能导致未定义行为
+   ```
+
+3. **忽略string::npos检查** - 未检查find结果
+   ```cpp
+   string s = "Hello";
+   size_t pos = s.find("World");  
+   string sub = s.substr(pos);    // 错误! 未检查pos是否为npos
+   ```
+
+4. **C字符串转换问题** - c_str()指针在string修改后可能失效
+   ```cpp
+   string s = "Hello";
+   const char* ptr = s.c_str();
+   s += " World";      // ptr可能失效
+   cout << ptr;        // 不安全的操作
+   ```
+
+### 最佳实践
+
+1. **使用合适的方法进行边界检查**
+   ```cpp
+   string s = "Hello";
+   // 安全访问 - 越界会抛出异常
+   try {
+       char c = s.at(10);
+   } catch (const out_of_range& e) {
+       cerr << "越界访问: " << e.what() << endl;
+   }
+   ```
+
+2. **字符串连接效率优化**
+   ```cpp
+   // 低效: 每次+=都可能重新分配内存
+   string result;
+   for (int i = 0; i < 1000; ++i) {
+       result += to_string(i);
+   }
+
+   // 高效: 预先分配足够空间
+   string result;
+   result.reserve(10000);  // 预估大小
+   for (int i = 0; i < 1000; ++i) {
+       result += to_string(i);
+   }
+
+   // 或使用字符串流
+   ostringstream oss;
+   for (int i = 0; i < 1000; ++i) {
+       oss << i;
+   }
+   string result = oss.str();
+   ```
+
+3. **安全地使用find结果**
+   ```cpp
+   string s = "Hello World";
+   size_t pos = s.find("World");
+   if (pos != string::npos) {
+       string sub = s.substr(pos);  // 安全
+   }
+   ```
+
+4. **使用string_view减少拷贝(C++17)**
+   ```cpp
+   // 使用string_view作为函数参数，避免字符串拷贝
+   bool starts_with(string_view str, string_view prefix) {
+       return str.substr(0, prefix.size()) == prefix;
+   }
+   ```
+
+5. **避免不必要的临时对象**
+   ```cpp
+   // 低效: 创建多个临时string对象
+   string result = string("Hello ") + string("World");
+
+   // 高效: 直接使用字符串字面值
+   string result = "Hello " + string("World");
+   ```
+
+## 总结
+
+C++ `string` 类提供了丰富而强大的字符串处理功能。掌握这些操作可以帮助你更高效地处理各种文本处理任务。关键是理解字符串的内存管理方式，选择合适的方法进行操作，并注意潜在的陷阱。
+
+随着C++标准的发展，string类不断获得新功能(如C++17的string_view和C++20的starts_with/ends_with方法)，使字符串处理变得更加便捷和高效。
