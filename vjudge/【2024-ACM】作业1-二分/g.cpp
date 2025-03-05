@@ -1,45 +1,23 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-// 计算给定利率下的每月还款金额
-double calculatePayment(double principal, double rate, int months) {
-    if (fabs(rate) < 1e-10) {
-        return principal / months;
-    }
-    return principal * rate * pow(1 + rate, months) / (pow(1 + rate, months) - 1);
+double w0,w;
+int m;
+bool sss(double q){
+    return (pow(1.0/(1.0+q),m)>=1-w0/w*q);
 }
-
 int main()
 {
-    double w0, w; // w0为贷款金额，w为每月还款金额
-    int m; // m为还款月数
-    cin >> w0 >> w >> m;
-    
-    // 二分查找月利率（0%到300%）
-    double left = 0, right = 3.0;
-    const double eps = 1e-10;
-    
-    // 二分查找过程
-    for (int i = 0; i < 100; i++) { // 迭代次数足够多以保证精度
-        double mid = (left + right) / 2;
-        double payment = calculatePayment(w0, mid, m);
-        
-        if (fabs(payment - w) < eps) {
-            left = right = mid; // 找到精确解
-            break;
-        } else if (payment > w) {
-            right = mid;
-        } else {
-            left = mid;
+    cin>>w0>>w>>m;
+    double l=0,r=3;
+    while(r-l>1e-9){ 
+        double mid=l+(r-l)/2;
+        if(sss(mid)){
+            r=mid;
+        }
+        else{
+            l=mid;
         }
     }
-    
-    // 转换为百分数并四舍五入到0.1%
-    double result = left * 100;
-    result = round(result * 10) / 10;
-    
-    // 输出结果
-    cout << fixed << setprecision(1) << result << "%" << endl;
-    
+    printf("%.1lf\n",l*100);
     return 0;
 }

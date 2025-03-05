@@ -5,11 +5,11 @@ int main()
 {
     int n,l,r,t;
     cin>>n>>l>>r;
-    vector<int> a(n+1,0);
+    vector<int>a(n+1,0);
     
-    for(int i = 1; i <= n; i++) {
-        cin >> t;
-        a[i] = t+a[i-1];
+    for(int i=1;i<=n;i++){
+        cin>>t;
+        a[i]=t+a[i-1];
     }
     double ans=0;
     for(int i=l;i<=r;i++){
