@@ -28,6 +28,5 @@ int main()
     
     if((A-a)>=0)printf("B\n%d",a);
     else printf("A\n%d",b);
-
     return 0;
 }
