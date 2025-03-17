@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "stl容器.md",
+                "file": "ACM初学者算法指南/搜索算法/深度优先搜索.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "stl容器"
+              "title": "深度优先搜索"
             }
           },
           {
@@ -90,8 +90,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "c90f8590d69ffb96",
@@ -155,13 +154,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "stl容器.md",
+                "file": "ACM初学者算法指南/搜索算法/深度优先搜索.md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "stl容器 的大纲"
+              "title": "深度优先搜索 的大纲"
             }
           }
         ],
@@ -187,6 +186,8 @@
   },
   "active": "a910e9da41135ed8",
   "lastOpenFiles": [
+    "ACM初学者算法指南/README.md",
+    "stl容器.md",
     "未命名.canvas",
     "未命名 2.md",
     "未命名 1.md",
