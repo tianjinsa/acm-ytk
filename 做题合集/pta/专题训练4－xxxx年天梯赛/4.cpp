@@ -11,7 +11,7 @@ int main()
         if(a*b==c){
             cout<<"Lv Yan"<<endl;
         }
-        else if(a+c==b){
+        else if(a+b==c){
             cout<<"Tu Dou"<<endl;
         }
         else{
