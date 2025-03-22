@@ -13,12 +13,24 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ACM初学者算法指南/高级数据结构/ST表.md",
+                "file": "ACM初学者算法指南/数据结构/单调栈和单调队列.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ST表"
+              "title": "单调栈和单调队列"
+            }
+          },
+          {
+            "id": "601fae1d52f3191b",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.8.9"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.8.9"
             }
           }
         ]
@@ -94,7 +106,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "stl容器.md",
+                "file": "ACM初学者算法指南/高级数据结构/ST表.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +116,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "stl容器 的反向链接列表"
+              "title": "ST表 的反向链接列表"
             }
           },
           {
@@ -113,12 +125,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "stl容器.md",
+                "file": "ACM初学者算法指南/高级数据结构/ST表.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "stl容器 的出链列表"
+              "title": "ST表 的出链列表"
             }
           },
           {
@@ -150,13 +162,23 @@
               "icon": "lucide-list",
               "title": "ST表 的大纲"
             }
+          },
+          {
+            "id": "44bfd0d4e88004a1",
+            "type": "leaf",
+            "state": {
+              "type": "copilot-chat-view",
+              "state": {},
+              "icon": "message-square",
+              "title": "Copilot"
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 458
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -169,16 +191,35 @@
       "workspaces:管理工作区布局": false,
       "markdown-importer:打开 Markdown 格式转换器": false,
       "obsidian-projects:打开项目": false,
-      "remotely-save:Remotely Save": false
+      "remotely-save:Remotely Save": false,
+      "copilot:Open Copilot Chat": false
     }
   },
   "active": "a910e9da41135ed8",
   "lastOpenFiles": [
     "ACM初学者算法指南/高级数据结构/ST表.md",
-    "ACM初学者算法指南/数据结构/线段树.md",
-    "二叉树.md",
+    "ACM初学者算法指南/高级数据结构/树状数组.md",
+    "ACM初学者算法指南/高级数据结构/分块算法.md",
     "ACM初学者算法指南/数据结构/单调栈和单调队列.md",
     "ACM初学者算法指南/动态规划/背包问题.md",
+    "ACM初学者算法指南/数据结构/基础数据结构.md",
+    "ACM初学者算法指南/数据结构/并查集.md",
+    "textgenerator/templates/default/getParagraph.md",
+    "textgenerator/templates/default/getOutline.md",
+    "textgenerator/templates/default/simplify.md",
+    "textgenerator/templates/default/summarize.md",
+    "textgenerator/templates/default/getIdeas.md",
+    "textgenerator/templates/default/getTags.md",
+    "textgenerator/templates/default/getEmailPos.md",
+    "textgenerator/templates/default/summarizeLarge.md",
+    "textgenerator/templates/default/rewrite.md",
+    "textgenerator/templates/default/getTitles.md",
+    "textgenerator/templates/default/getEmailNeg.md",
+    "textgenerator/templates/default",
+    "textgenerator/templates",
+    "textgenerator",
+    "ACM初学者算法指南/数据结构/线段树.md",
+    "二叉树.md",
     "stl容器.md",
     "STL常用函数.md",
     "ACM初学者算法指南/搜索算法/广度优先搜索.md",
@@ -186,14 +227,7 @@
     "ACM初学者算法指南/搜索算法/深度优先搜索.md",
     "未命名.canvas",
     "未命名 2.md",
-    "未命名 1.md",
-    "Projects - Demo Project/5 Mistakes I Made When I Started Using Obsidian.md",
-    "未命名.md",
     "未命名",
-    "Projects - Demo Project/What I Learned From Taking 15,000 Notes.md",
-    "Projects - Demo Project/Why You Should Be Taking More Notes.md",
-    "Projects - Demo Project/The Easiest Way to Start Taking Notes.md",
-    "Projects - Demo Project/The Best Notes You'll Ever Make.md",
     "Projects - Demo Project"
   ]
 }
