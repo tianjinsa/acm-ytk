@@ -13,24 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ACM初学者算法指南/数据结构/单调栈和单调队列.md",
+                "file": "ACM初学者算法指南/高级数据结构/二叉树.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "单调栈和单调队列"
-            }
-          },
-          {
-            "id": "601fae1d52f3191b",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.8.9"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.8.9"
+              "title": "二叉树"
             }
           }
         ]
@@ -154,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ACM初学者算法指南/高级数据结构/ST表.md",
+                "file": "ACM初学者算法指南/高级数据结构/二叉树.md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "ST表 的大纲"
+              "title": "二叉树 的大纲"
             }
           },
           {
@@ -174,7 +162,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -197,11 +185,16 @@
   },
   "active": "a910e9da41135ed8",
   "lastOpenFiles": [
+    "ACM初学者算法指南/README.md",
+    "高级数据结构/线段树懒标记.md",
+    "高级数据结构",
+    "ACM初学者算法指南/动态规划/背包问题.md",
+    "ACM初学者算法指南/动态规划/动态规划概述.md",
+    "ACM初学者算法指南/动态规划/最长公共子序列.md",
+    "ACM初学者算法指南/数据结构/单调栈和单调队列.md",
     "ACM初学者算法指南/高级数据结构/ST表.md",
     "ACM初学者算法指南/高级数据结构/树状数组.md",
     "ACM初学者算法指南/高级数据结构/分块算法.md",
-    "ACM初学者算法指南/数据结构/单调栈和单调队列.md",
-    "ACM初学者算法指南/动态规划/背包问题.md",
     "ACM初学者算法指南/数据结构/基础数据结构.md",
     "ACM初学者算法指南/数据结构/并查集.md",
     "textgenerator/templates/default/getParagraph.md",
@@ -222,11 +215,7 @@
     "二叉树.md",
     "stl容器.md",
     "STL常用函数.md",
-    "ACM初学者算法指南/搜索算法/广度优先搜索.md",
-    "ACM初学者算法指南/README.md",
-    "ACM初学者算法指南/搜索算法/深度优先搜索.md",
     "未命名.canvas",
-    "未命名 2.md",
     "未命名",
     "Projects - Demo Project"
   ]
