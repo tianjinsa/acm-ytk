@@ -4,5 +4,5 @@
 *temp*
 *.cph
 *.bin
-*.smtcmp_vector_db.tar.gz
-*.gz
+/*.smtcmp_vector_db.tar.gz
+/*.gz
