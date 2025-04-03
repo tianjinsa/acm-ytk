@@ -157,7 +157,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -178,8 +178,11 @@
       "copilot:Open Copilot Chat": false
     }
   },
-  "active": "a910e9da41135ed8",
+  "active": "44bfd0d4e88004a1",
   "lastOpenFiles": [
+    "ACM初学者算法指南/数据结构/跳表.md",
+    "ACM初学者算法指南/数据结构/红黑树.md",
+    "ACM初学者算法指南/数据结构/平衡树.md",
     "ACM初学者算法指南/数据结构/线段树懒标记.md",
     "ACM初学者算法指南/高级数据结构/二叉树.md",
     "ACM初学者算法指南/数据结构/ST表.md",
@@ -204,9 +207,6 @@
     "textgenerator/templates/default/getOutline.md",
     "textgenerator/templates/default/simplify.md",
     "textgenerator/templates/default/summarize.md",
-    "textgenerator/templates/default/getIdeas.md",
-    "textgenerator/templates/default/getTags.md",
-    "textgenerator/templates/default/getEmailPos.md",
     "textgenerator/templates/default",
     "textgenerator/templates",
     "textgenerator",

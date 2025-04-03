@@ -131,32 +131,15 @@
       "core": true
     },
     {
-      "name": "text-embedding-3-large",
+      "name": "BAAI/bge-m3",
       "provider": "openai",
       "enabled": true,
-      "isBuiltIn": true,
-      "isEmbeddingModel": true
-    },
-    {
-      "name": "embed-multilingual-light-v3.0",
-      "provider": "cohereai",
-      "enabled": true,
-      "isBuiltIn": true,
-      "isEmbeddingModel": true
-    },
-    {
-      "name": "text-embedding-004",
-      "provider": "google",
-      "enabled": true,
-      "isBuiltIn": true,
-      "isEmbeddingModel": true
-    },
-    {
-      "name": "azure-openai",
-      "provider": "azure openai",
-      "enabled": true,
-      "isBuiltIn": true,
-      "isEmbeddingModel": true
+      "isBuiltIn": false,
+      "baseUrl": "https://api.siliconflow.cn/v1",
+      "apiKey": "sk-aasulckecmvrowlvtkttqjmilkbomlhzwgqrlanlwurwqyyz",
+      "isEmbeddingModel": true,
+      "capabilities": [],
+      "displayName": "BAAI/bge-m3"
     }
   ],
   "embeddingRequestsPerMin": 90,
