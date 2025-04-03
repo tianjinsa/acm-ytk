@@ -1,9 +1,10 @@
 *output/
-/.*
 *.exe
 *temp*
 *.cph
 *.bin
 /*.smtcmp_vector_db.tar.gz
 /*.gz
-/资料/.obsidian/*
+资料/.smtcmp_vector_db.tar.gz
+*/.obsidian/*
+*/.*/*
