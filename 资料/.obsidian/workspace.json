@@ -11,10 +11,14 @@
             "id": "a910e9da41135ed8",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "ACM初学者算法指南/README.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "README"
             }
           }
         ]
@@ -138,12 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "ACM初学者算法指南/README.md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "大纲"
+              "title": "README 的大纲"
             }
           },
           {
@@ -155,13 +160,23 @@
               "icon": "message-square",
               "title": "Copilot"
             }
+          },
+          {
+            "id": "1832dbd3e04f0176",
+            "type": "leaf",
+            "state": {
+              "type": "smtcmp-chat-view",
+              "state": {},
+              "icon": "wand-sparkles",
+              "title": "Smart composer chat"
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 269
+    "width": 393
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -175,11 +190,13 @@
       "markdown-importer:打开 Markdown 格式转换器": false,
       "obsidian-projects:打开项目": false,
       "remotely-save:Remotely Save": false,
-      "copilot:Open Copilot Chat": false
+      "copilot:Open Copilot Chat": false,
+      "smart-composer:Open smart composer": false
     }
   },
-  "active": "44bfd0d4e88004a1",
+  "active": "1832dbd3e04f0176",
   "lastOpenFiles": [
+    "ACM初学者算法指南/动态规划/背包问题.md",
     "ACM初学者算法指南/数据结构/跳表.md",
     "ACM初学者算法指南/数据结构/红黑树.md",
     "ACM初学者算法指南/数据结构/平衡树.md",
@@ -194,7 +211,6 @@
     "ACM初学者算法指南/README.md",
     "高级数据结构/线段树懒标记.md",
     "高级数据结构",
-    "ACM初学者算法指南/动态规划/背包问题.md",
     "ACM初学者算法指南/动态规划/动态规划概述.md",
     "ACM初学者算法指南/动态规划/最长公共子序列.md",
     "ACM初学者算法指南/数据结构/单调栈和单调队列.md",
