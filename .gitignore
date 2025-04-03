@@ -6,3 +6,4 @@
 *.bin
 /*.smtcmp_vector_db.tar.gz
 /*.gz
+/资料/.obsidian/*
