@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 234
   },
   "right": {
     "id": "c90f8590d69ffb96",
@@ -166,7 +166,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 458
+    "width": 343
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -183,7 +183,7 @@
       "copilot:Open Copilot Chat": false
     }
   },
-  "active": "a910e9da41135ed8",
+  "active": "8b76d99cc292d2e5",
   "lastOpenFiles": [
     "ACM初学者算法指南/README.md",
     "高级数据结构/线段树懒标记.md",
