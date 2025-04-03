@@ -48,6 +48,12 @@
       "id": "火山引擎",
       "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
       "apiKey": "08717d26-87b0-4dc8-af24-6fc79e4d2eeb"
+    },
+    {
+      "type": "openai-compatible",
+      "id": "gemini-deno",
+      "apiKey": "AIzaSyAahN4VChovJV49XEhf9FXvrIuhV0BEJwQ",
+      "baseUrl": "https://tjs-gemini.deno.dev/"
     }
   ],
   "chatModels": [
@@ -155,6 +161,36 @@
       "providerId": "火山引擎",
       "id": "deepseek-v3",
       "model": "ep-20250210145212-hgrtp"
+    },
+    {
+      "providerId": "火山引擎",
+      "providerType": "openai-compatible",
+      "id": "deepseek-r1",
+      "model": "ep-20250210145228-rhzqp"
+    },
+    {
+      "providerId": "火山引擎",
+      "providerType": "openai-compatible",
+      "id": "doubao-1.5-pro-32k",
+      "model": "ep-20250209163727-5cxms"
+    },
+    {
+      "providerId": "gemini-deno",
+      "providerType": "openai-compatible",
+      "id": "gemini-2.0-pro-exp",
+      "model": "gemini-2.0-pro-exp-02-05"
+    },
+    {
+      "providerId": "gemini-deno",
+      "providerType": "openai-compatible",
+      "id": "gemini-2.0-flash-exp",
+      "model": "gemini-2.0-flash-exp"
+    },
+    {
+      "providerId": "gemini-deno",
+      "providerType": "openai-compatible",
+      "id": "gemini-2.5-pro-exp",
+      "model": "gemini-2.5-pro-exp-03-25"
     }
   ],
   "embeddingModels": [
@@ -208,7 +244,7 @@
       "dimension": 1024
     }
   ],
-  "chatModelId": "deepseek-v3",
+  "chatModelId": "deepseek-r1",
   "applyModelId": "deepseek-v3",
   "embeddingModelId": "BAAI/bge-m3",
   "systemPrompt": "用中文交流",

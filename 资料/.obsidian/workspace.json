@@ -152,7 +152,7 @@
             }
           },
           {
-            "id": "1832dbd3e04f0176",
+            "id": "cc908295c77b445b",
             "type": "leaf",
             "state": {
               "type": "smtcmp-chat-view",
@@ -183,7 +183,7 @@
       "smart-composer:Open smart composer": false
     }
   },
-  "active": "1832dbd3e04f0176",
+  "active": "cc908295c77b445b",
   "lastOpenFiles": [
     "ACM初学者算法指南/动态规划/背包问题.md",
     "ACM初学者算法指南/数据结构/跳表.md",

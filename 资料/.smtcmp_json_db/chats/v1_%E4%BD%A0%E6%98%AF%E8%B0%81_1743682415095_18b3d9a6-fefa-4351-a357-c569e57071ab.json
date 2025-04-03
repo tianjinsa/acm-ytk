@@ -1,0 +1,80 @@
+{
+  "id": "18b3d9a6-fefa-4351-a357-c569e57071ab",
+  "title": "你是谁",
+  "messages": [
+    {
+      "role": "user",
+      "content": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "你是谁",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "textFormat": 0,
+              "textStyle": ""
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      },
+      "promptContent": [
+        {
+          "type": "text",
+          "text": "\n\n你是谁\n\n"
+        }
+      ],
+      "id": "2b3aa34d-c93e-43b9-adf1-03f92e7f897b",
+      "mentionables": [
+        {
+          "type": "current-file",
+          "file": "ACM初学者算法指南/README.md"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": "\n\n我是由中国的深度求索（DeepSeek）公司开发的智能助手，专注于帮助您编辑和管理Obsidian中的Markdown文件。若您需要调整文件结构、优化文档格式或整理知识库，我随时为您提供专业建议。（根据您的设定不处理文件内容外的其他请求）",
+      "id": "c0384914-f2c1-4e42-812a-e83301bc6f02",
+      "metadata": {
+        "usage": {
+          "completion_tokens": 234,
+          "prompt_tokens": 1558,
+          "total_tokens": 1792,
+          "prompt_tokens_details": {
+            "cached_tokens": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 172
+          }
+        },
+        "model": {
+          "providerId": "火山引擎",
+          "providerType": "openai-compatible",
+          "id": "deepseek-r1",
+          "model": "ep-20250210145228-rhzqp"
+        }
+      }
+    }
+  ],
+  "createdAt": 1743682405676,
+  "updatedAt": 1743682415095,
+  "schemaVersion": 1
+}

@@ -1,0 +1,74 @@
+{
+  "id": "d0114635-c650-4982-822f-5bf07e2fbe08",
+  "title": "这是什么",
+  "messages": [
+    {
+      "role": "user",
+      "content": {
+        "root": {
+          "children": [
+            {
+              "children": [
+                {
+                  "detail": 0,
+                  "format": 0,
+                  "mode": "normal",
+                  "style": "",
+                  "text": "这是什么",
+                  "type": "text",
+                  "version": 1
+                }
+              ],
+              "direction": "ltr",
+              "format": "",
+              "indent": 0,
+              "type": "paragraph",
+              "version": 1,
+              "textFormat": 0,
+              "textStyle": ""
+            }
+          ],
+          "direction": "ltr",
+          "format": "",
+          "indent": 0,
+          "type": "root",
+          "version": 1
+        }
+      },
+      "promptContent": [
+        {
+          "type": "text",
+          "text": "\n\n这是什么\n\n"
+        }
+      ],
+      "id": "221ea7e2-b6c4-498e-8826-20e8b389c65a",
+      "mentionables": [
+        {
+          "type": "current-file",
+          "file": "ACM初学者算法指南/README.md"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": "这是一个ACM算法学习指南的README文件，旨在帮助ACM-ICPC竞赛初学者系统地学习C++语言和算法知识。该指南包括基础数据结构、搜索算法、图论算法、动态规划、字符串算法、数学算法、技巧与优化以及实战练习指导等内容。此外，还提供了学习建议和推荐的训练平台。",
+      "id": "88d49c15-3105-4c23-9d91-98a8016fff9f",
+      "metadata": {
+        "usage": {
+          "completion_tokens": 74,
+          "prompt_tokens": 1701,
+          "total_tokens": 1775
+        },
+        "model": {
+          "providerId": "gemini-deno",
+          "providerType": "openai-compatible",
+          "id": "gemini-2.0-flash-exp",
+          "model": "gemini-2.0-flash-exp"
+        }
+      }
+    }
+  ],
+  "createdAt": 1743682393766,
+  "updatedAt": 1743682396156,
+  "schemaVersion": 1
+}
