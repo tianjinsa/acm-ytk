@@ -60,7 +60,14 @@
 3. 定期回顾已学内容，加深理解和记忆
 4. 参与在线竞赛平台(如Codeforces, LeetCode)的周赛，检验学习成果
 
+## 推荐训练平台
+1. [LeetCode](https://leetcode.com/) - 经典算法题库
+2. [Codeforces](https://codeforces.com/) - ACM风格竞赛平台
+3. [AtCoder](https://atcoder.jp/) - 日本竞赛平台
+4. [牛客网](https://www.nowcoder.com/) - 国内笔试真题
+5. [洛谷](https://www.luogu.com.cn/) - 中文算法题库
+
 ## 贡献与反馈
 如果你发现任何错误或有改进建议，请提交issue或pull request。
 
-祝你在算法竞赛的道路上取得优异成绩！
+祝你在算法竞赛的道路上取得优异成绩！
