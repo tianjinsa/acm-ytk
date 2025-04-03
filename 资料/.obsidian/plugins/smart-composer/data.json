@@ -40,14 +40,14 @@
     {
       "type": "openai-compatible",
       "id": "硅基流动",
-      "apiKey": "sk-aasulckecmvrowlvtkttqjmilkbomlhzwgqrlanlwurwqyyz",
-      "baseUrl": "https://api.siliconflow.cn/v1"
+      "baseUrl": "https://api.siliconflow.cn/v1",
+      "apiKey": "sk-aasulckecmvrowlvtkttqjmilkbomlhzwgqrlanlwurwqyyz"
     },
     {
       "type": "openai-compatible",
       "id": "火山引擎",
-      "apiKey": "08717d26-87b0-4dc8-af24-6fc79e4d2eeb",
-      "baseUrl": "https://ark.cn-beijing.volces.com/api/v3"
+      "baseUrl": "https://ark.cn-beijing.volces.com/api/v3",
+      "apiKey": "08717d26-87b0-4dc8-af24-6fc79e4d2eeb"
     }
   ],
   "chatModels": [
@@ -112,8 +112,8 @@
       "providerId": "openai",
       "id": "o1",
       "model": "o1",
-      "streamingDisabled": true,
-      "enable": false
+      "enable": false,
+      "streamingDisabled": true
     },
     {
       "providerType": "anthropic",
@@ -151,8 +151,8 @@
       "enable": false
     },
     {
-      "providerId": "火山引擎",
       "providerType": "openai-compatible",
+      "providerId": "火山引擎",
       "id": "deepseek-v3",
       "model": "ep-20250210145212-hgrtp"
     }
@@ -201,8 +201,8 @@
       "dimension": 1024
     },
     {
-      "providerId": "硅基流动",
       "providerType": "openai-compatible",
+      "providerId": "硅基流动",
       "id": "BAAI/bge-m3",
       "model": "BAAI/bge-m3",
       "dimension": 1024

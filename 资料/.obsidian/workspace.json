@@ -152,16 +152,6 @@
             }
           },
           {
-            "id": "44bfd0d4e88004a1",
-            "type": "leaf",
-            "state": {
-              "type": "copilot-chat-view",
-              "state": {},
-              "icon": "message-square",
-              "title": "Copilot"
-            }
-          },
-          {
             "id": "1832dbd3e04f0176",
             "type": "leaf",
             "state": {
@@ -172,7 +162,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -190,7 +180,6 @@
       "markdown-importer:打开 Markdown 格式转换器": false,
       "obsidian-projects:打开项目": false,
       "remotely-save:Remotely Save": false,
-      "copilot:Open Copilot Chat": false,
       "smart-composer:Open smart composer": false
     }
   },
