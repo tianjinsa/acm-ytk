@@ -11,14 +11,10 @@
             "id": "a910e9da41135ed8",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "ACM初学者算法指南/高级数据结构/二叉树.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "二叉树"
+              "title": "新标签页"
             }
           }
         ]
@@ -142,13 +138,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ACM初学者算法指南/高级数据结构/二叉树.md",
                 "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "二叉树 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -185,6 +180,13 @@
   },
   "active": "a910e9da41135ed8",
   "lastOpenFiles": [
+    "ACM初学者算法指南/高级数据结构/二叉树.md",
+    "ACM初学者算法指南/数据结构/ST表.md",
+    "ACM初学者算法指南/数据结构/树状数组.md",
+    "ACM初学者算法指南/数据结构/高级数据结构概述.md",
+    "ACM初学者算法指南/数据结构/分块算法.md",
+    "ACM初学者算法指南/数据结构/二叉树.md",
+    "ACM初学者算法指南/数据结构/堆.md",
     "ACM初学者算法指南/README.md",
     "高级数据结构/线段树懒标记.md",
     "高级数据结构",
@@ -205,16 +207,9 @@
     "textgenerator/templates/default/getTags.md",
     "textgenerator/templates/default/getEmailPos.md",
     "textgenerator/templates/default/summarizeLarge.md",
-    "textgenerator/templates/default/rewrite.md",
-    "textgenerator/templates/default/getTitles.md",
-    "textgenerator/templates/default/getEmailNeg.md",
     "textgenerator/templates/default",
     "textgenerator/templates",
     "textgenerator",
-    "ACM初学者算法指南/数据结构/线段树.md",
-    "二叉树.md",
-    "stl容器.md",
-    "STL常用函数.md",
     "未命名.canvas",
     "未命名",
     "Projects - Demo Project"
