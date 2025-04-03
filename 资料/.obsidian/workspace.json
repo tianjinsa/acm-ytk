@@ -180,6 +180,7 @@
   },
   "active": "a910e9da41135ed8",
   "lastOpenFiles": [
+    "ACM初学者算法指南/数据结构/线段树懒标记.md",
     "ACM初学者算法指南/高级数据结构/二叉树.md",
     "ACM初学者算法指南/数据结构/ST表.md",
     "ACM初学者算法指南/数据结构/树状数组.md",
@@ -206,7 +207,6 @@
     "textgenerator/templates/default/getIdeas.md",
     "textgenerator/templates/default/getTags.md",
     "textgenerator/templates/default/getEmailPos.md",
-    "textgenerator/templates/default/summarizeLarge.md",
     "textgenerator/templates/default",
     "textgenerator/templates",
     "textgenerator",
