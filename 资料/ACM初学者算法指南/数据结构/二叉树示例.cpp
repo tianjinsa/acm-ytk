@@ -6,6 +6,9 @@
         TreeNode(int a=0):val(a),left(nullptr),right(nullptr){}
     };
 
+
+
+    // Postorder + Inorder to construct a binary tree
     TreeNode* maketree(vector<int>&postlist,vector<int>&inlist,int post_start,int post_end,int in_start,int in_end,map<int,int>&mp)
     {
         if (post_start>post_end || in_start>in_end) return nullptr;
@@ -25,7 +28,7 @@
         }
         return maketree(postlist,inlist,0,postlist.size()-1,0,inlist.size()-1,mp);
     }
-
+    // Preorder + Inorder to construct a binary tree
     TreeNode* maketree(vector<int>& prelist, vector<int>& inlist, int pre_start, int pre_end, int in_start, int in_end, map<int,int>& mp)
     {
         if(pre_start > pre_end || in_start > in_end) return nullptr;
@@ -36,6 +39,7 @@
         root->right = maketree(prelist, inlist, pre_start+left_size+1, pre_end, rootindex+1, in_end, mp);
         return root;
     }
+
     TreeNode* maketreefirst(vector<int>& prelist, vector<int>& inlist)
     {
         map<int,int> mp;
@@ -44,6 +48,7 @@
         }
         return maketree(prelist, inlist, 0, prelist.size()-1, 0, inlist.size()-1, mp);
     }
+    
     int main()
     {
         int n;
