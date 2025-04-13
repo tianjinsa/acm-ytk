@@ -16,6 +16,7 @@
         root->right=maketree(postlist,inlist,post_start+left_size,post_end-1,rootindex+1,in_end,mp);
         return root;
     }
+    
     TreeNode* maketreefirst(vector<int>&postlist,vector<int>&inlist)
     {
         map<int,int>mp;
@@ -24,6 +25,7 @@
         }
         return maketree(postlist,inlist,0,postlist.size()-1,0,inlist.size()-1,mp);
     }
+
     TreeNode* maketree(vector<int>& prelist, vector<int>& inlist, int pre_start, int pre_end, int in_start, int in_end, map<int,int>& mp)
     {
         if(pre_start > pre_end || in_start > in_end) return nullptr;
