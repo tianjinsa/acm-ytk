@@ -3,17 +3,17 @@ using namespace std;
 vector<vector<int>>a;
 vector<int>tree;
 
-void update(int index,int vv){
-    while(index<tree.size()){
-        tree[index]+=vv;
-        index+=index&(-index);
+void update(int dex,int vv){
+    while(dex<tree.size()){
+        tree[dex]+=vv;
+        dex+=dex&(-dex);
     }
 }
-int query(int index){
+int query(int dex){
     int ans=0;
-    while(index>0){
-        ans+=tree[index];
-        index-=index&(-index);
+    while(dex>0){
+        ans+=tree[dex];
+        dex-=dex&(-dex);
     }
     return ans;
 }
