@@ -1,33 +1,33 @@
 #include<bits/stdc++.h>
 using namespace std;
-
+int ss(long  long x,long long n){
+    int ans=0;
+    for(long long i = 1;x>0;++i){
+        x-=pow(i,n);
+        if(x==0)ans=i;
+    }
+    return ans;
+}
 int main()
 {
-    long long n;
-    if(!(cin>>n)) return 0;
-    int best_k = 0, best_m = 0;
-    for(int k = 31; k >= 1; --k) {
-        long long sum = 0;
-        for(int m = 1; ; ++m) {
-            long long xpmclzjkln = 1;
-            for(int t = 1; t <= k; ++t) {
-                if(xpmclzjkln > n / m) { xpmclzjkln = n + 1; break; }
-                xpmclzjkln *= m;
-            }
-            sum += xpmclzjkln;
-            if(sum > n) break;
-            if(sum == n && m >= 2) { best_k = k; best_m = m; }
+    int n;
+    cin>>n;
+    int ans=0,ansi=0;
+    for(long long i=32;i!=0;i--){
+        if(ans=ss(n,i)){
+            ansi=i;
+            break;
         }
-        if(best_k) break;
     }
-    if(best_k) {
-        for(int i = 1; i <= best_m; ++i) {
-            if(i > 1) cout << "+";
-            cout << i << "^" << best_k;
-        }
-        cout << "\n";
-    } else {
-        cout << "Impossible for " << n << "." << endl;
+    if(!ansi){
+        cout << "Impossible for "<<n<<"." << endl;   
+        return 0;
+    }
+    bool fl=0;
+    for(int i=1;i<=ans;i++){
+        if(fl)cout<<'+';
+        fl=1;
+        cout<<i<<"^"<<ansi;
     }
     return 0;
 }
