@@ -3,6 +3,7 @@
 *temp*
 *.cph
 *.bin
+*.roo
 /*.smtcmp_vector_db.tar.gz
 /*.gz
 */.smtcmp_vector_db.tar.gz
