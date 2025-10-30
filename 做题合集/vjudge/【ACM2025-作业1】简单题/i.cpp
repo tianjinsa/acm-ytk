@@ -65,7 +65,7 @@ int main()
                     }
                     // 如果旋转90度内无碰撞，则垂直下降至水平边
                     if(bestAngle >= PI/2) {
-                        lf drop = 1e18;6
+                        lf drop = 1e18;
                         int hitJ = -1;
                         for(int j = i+1; j < m2; j++){
                             auto& [fl2, xy2, d12, d22] = v[j];
